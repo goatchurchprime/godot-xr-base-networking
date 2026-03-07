@@ -3,7 +3,7 @@ extends "res://addons/gd-plug/plug.gd"
 
 # from clean clone run 
 #   godot4 --headless --xr-mode off -s plug.gd update debug
-# You will also need to install openxrvendorsplugin (v 4.0.0) from the assetlib
+# To export to android you will also need to install openxrvendorsplugin (v 4.0.0) from the assetlib
 
 func _plugging():
 	plug("GodotVR/godot-xr-tools", {"tag": "4.5.1"})
