@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dgdb1texynduw" path="res://addons/godot-xr-tools/objects/virtual_keyboard.tscn" id="10_w48qg"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="11_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="12_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="13_ycdy4"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0xm2m"]
 frequency = 0.2215
@@ -132,5 +133,10 @@ viewport_size = Vector2(650, 400)
 
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
 shape = SubResource("BoxShape3D_vivmo")
+
+[node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
+
+[node name="VRPlayerAvatar" parent="PlayerAvatars" unique_id=391835606 instance=ExtResource("13_ycdy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
 
 [editable path="NetworkGatewayViewport"]
