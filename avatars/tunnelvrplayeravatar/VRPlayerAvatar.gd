@@ -29,13 +29,10 @@ static var selectedtrackslookup = {
 	"HeadCam:rotation":-1 }
 
 func _ready():
-	return
-	chandl = LeftHandController.get_node("LeftHand/Hand_Glove_low_L")
-	if chandl:
-		chandlskel = chandl.find_child("Skeleton3D")
-	chandr = RightHandController.get_node("RightHand/Hand_low_R")
-	if chandr:
-		chandrskel = chandr.find_child("Skeleton3D")
+	chandl = LeftHandController.get_node("LeftHand/Hand_Glove_L")
+	chandlskel = chandl.find_child("Skeleton3D")
+	chandr = RightHandController.get_node("RightHand/Hand_Glove_R")
+	chandrskel = chandr.find_child("Skeleton3D")
 
 	var anim : Animation = $PlayerAnimation.get_animation("playeral/trackstemplate")
 	var pf = get_node("PlayerFrame")
@@ -94,8 +91,10 @@ func PF_processlocalavatarposition(delta):
 		handl.transform.origin += Vector3(headface.x*0.2, 0.2, headface.z*0.2)
 		handr.transform.origin += Vector3(headface.x*0.2, 0.2, headface.z*0.2)
 
-func PF_setspeakingvolume(v):
-	$HeadCam/AudioStreamPlayer/MouthSign.scale.z = v
+	var twovoipmic = get_node("/root/Main/NetworkGatewayViewport/Viewport/NetworkGateway/VBox/PlayerConnections/VBox/RecordingFeature/TwoVoipMic")
+	if twovoipmic:
+		$HeadCam/AudioStreamPlayer/MouthSign.scale.z = twovoipmic.last_chunkmax
+
 
 func _process(_delta):
 		# since we cannot animate fading of the mouth sign

@@ -9,10 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="6_efxa6"]
 [ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="7_dg77c"]
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="9_ycdy4"]
-[ext_resource type="PackedScene" uid="uid://dgdb1texynduw" path="res://addons/godot-xr-tools/objects/virtual_keyboard.tscn" id="10_w48qg"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="11_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="12_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="13_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://djehrm378cbde" path="res://addons/player-networking/PlayerFrameLocal.tscn" id="14_w48qg"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0xm2m"]
 frequency = 0.2215
@@ -40,20 +40,20 @@ sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
 background_mode = 2
 sky = SubResource("Sky_h2yge")
 
-[sub_resource type="QuadMesh" id="QuadMesh_dg77c"]
+[sub_resource type="QuadMesh" id="QuadMesh_ycdy4"]
 resource_local_to_scene = true
 size = Vector2(3, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ycdy4"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_w48qg"]
 viewport_path = NodePath("NetworkGatewayViewport/Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w48qg"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vivmo"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_ycdy4")
+albedo_texture = SubResource("ViewportTexture_w48qg")
 texture_filter = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vivmo"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_2cqfq"]
 resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
 
@@ -91,10 +91,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
 
 [node name="PlayerBody" parent="XROrigin3D" unique_id=337536217 instance=ExtResource("9_ycdy4")]
 
-[node name="VirtualKeyboard" parent="XROrigin3D" unique_id=1990554270 instance=ExtResource("10_w48qg")]
-transform = Transform3D(0.990555, -0.089260675, 0.104083374, 0, 0.7590895, 0.6509862, -0.13711607, -0.6448376, 0.7519199, -1.0117581, 0.3991636, -0.90062904)
-scene_properties_keys = PackedStringArray("virtual_keyboard_2d.gd")
-
 [node name="World" type="Node3D" parent="." unique_id=1711002190]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="World" unique_id=998891937]
@@ -123,20 +119,28 @@ scene_properties_keys = PackedStringArray()
 size = Vector2i(650, 400)
 
 [node name="NetworkGateway" parent="NetworkGatewayViewport/Viewport" index="0" unique_id=407170005 instance=ExtResource("12_ycdy4")]
+playersnodepath = NodePath("../../../PlayerAvatars")
+localplayerscene = ""
+
+[node name="roomname" parent="NetworkGatewayViewport/Viewport/NetworkGateway/VBox/TabContainer/MQTTsignalling/VBox/HBoxM/HSplitContainer/Msettings/HBox" parent_id_path=PackedInt32Array(407170005, 804249689) index="1" unique_id=113252904]
+text = "lime"
 
 [node name="Screen" parent="NetworkGatewayViewport" index="1"]
-mesh = SubResource("QuadMesh_dg77c")
-surface_material_override/0 = SubResource("StandardMaterial3D_w48qg")
+mesh = SubResource("QuadMesh_ycdy4")
+surface_material_override/0 = SubResource("StandardMaterial3D_vivmo")
 
 [node name="StaticBody3D" parent="NetworkGatewayViewport" index="2"]
 viewport_size = Vector2(650, 400)
 
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
-shape = SubResource("BoxShape3D_vivmo")
+shape = SubResource("BoxShape3D_2cqfq")
 
 [node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
 
 [node name="VRPlayerAvatar" parent="PlayerAvatars" unique_id=391835606 instance=ExtResource("13_ycdy4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
 
+[node name="PlayerFrame" parent="PlayerAvatars/VRPlayerAvatar" unique_id=967951852 instance=ExtResource("14_w48qg")]
+
 [editable path="NetworkGatewayViewport"]
+[editable path="NetworkGatewayViewport/Viewport/NetworkGateway"]
