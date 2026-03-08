@@ -75,6 +75,7 @@ tracker = &"left_hand"
 [node name="LeftHand" parent="XROrigin3D/XRController3D_left" unique_id=1954624197 instance=ExtResource("3_1bvp3")]
 
 [node name="MovementDirect" parent="XROrigin3D/XRController3D_left" unique_id=264777544 instance=ExtResource("4_4c57u")]
+strafe = true
 
 [node name="XRController3D_right" type="XRController3D" parent="XROrigin3D" unique_id=2092080945]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20470023, 1.0419132, -0.43321365)
