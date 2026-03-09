@@ -129,41 +129,41 @@ shader_parameter/fade_amount = 1.0
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_707dm"]
 noise = SubResource("FastNoiseLite_4kaam")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_074og"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_yaehf"]
 viewport_path = NodePath("World/Mirror3D/Viewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cegan"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("12_yaehf")
 shader_parameter/color = Color(0.9019608, 0.99215686, 0.49411765, 1)
-shader_parameter/mirror_texture_linear = SubResource("ViewportTexture_074og")
+shader_parameter/mirror_texture_linear = SubResource("ViewportTexture_yaehf")
 shader_parameter/use_mirror_texture_linear = true
 shader_parameter/distortion_texture = SubResource("NoiseTexture2D_707dm")
 shader_parameter/distortion_strength = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_82xsv"]
+[sub_resource type="QuadMesh" id="QuadMesh_cegan"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_cegan")
+material = SubResource("ShaderMaterial_074og")
 size = Vector2(1, 2)
 
 [sub_resource type="QuadMesh" id="QuadMesh_getpj"]
 size = Vector2(1.1, 2.1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_074og"]
+[sub_resource type="QuadMesh" id="QuadMesh_82xsv"]
 resource_local_to_scene = true
 size = Vector2(3, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_cegan"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_getpj"]
 viewport_path = NodePath("NetworkGatewayViewport/Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_82xsv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryguw"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_cegan")
+albedo_texture = SubResource("ViewportTexture_getpj")
 texture_filter = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_getpj"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_d13ii"]
 resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
 
@@ -243,7 +243,7 @@ near = 7.1642275
 far = 57.129776
 
 [node name="Quad" parent="World/Mirror3D" index="1"]
-mesh = SubResource("QuadMesh_82xsv")
+mesh = SubResource("QuadMesh_cegan")
 
 [node name="MeshInstanceBorder" type="MeshInstance3D" parent="World/Mirror3D" unique_id=923077686]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, -0.01)
@@ -266,14 +266,14 @@ localplayerscene = ""
 text = "lime"
 
 [node name="Screen" parent="NetworkGatewayViewport" index="1"]
-mesh = SubResource("QuadMesh_074og")
-surface_material_override/0 = SubResource("StandardMaterial3D_82xsv")
+mesh = SubResource("QuadMesh_82xsv")
+surface_material_override/0 = SubResource("StandardMaterial3D_ryguw")
 
 [node name="StaticBody3D" parent="NetworkGatewayViewport" index="2"]
 viewport_size = Vector2(650, 400)
 
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
-shape = SubResource("BoxShape3D_getpj")
+shape = SubResource("BoxShape3D_d13ii")
 
 [node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
 
