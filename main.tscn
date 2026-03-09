@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ksq0mmbfkp5m"]
 
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://kt7y43kjkbxj" path="res://main.gd" id="1_w48qg"]
 [ext_resource type="PackedScene" uid="uid://btknduttnmoxf" path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://hpr0v012ghsb" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_tac_glove.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="4_4c57u"]
@@ -9,7 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="6_efxa6"]
 [ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="7_dg77c"]
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="9_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://delu2qjrw6teu" path="res://addons/Mirror3D/Mirror3D.tscn" id="11_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="11_dg77c"]
+[ext_resource type="Shader" uid="uid://bjf6fmae00yno" path="res://addons/Mirror3D/Mirror3D.gdshader" id="12_yaehf"]
 [ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="12_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="13_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://djehrm378cbde" path="res://addons/player-networking/PlayerFrameLocal.tscn" id="14_w48qg"]
@@ -41,23 +44,132 @@ background_mode = 2
 sky = SubResource("Sky_h2yge")
 
 [sub_resource type="QuadMesh" id="QuadMesh_ycdy4"]
+
+[sub_resource type="Shader" id="Shader_w48qg"]
+code = "shader_type spatial;
+render_mode unshaded;
+
+uniform sampler2D noise_texture;
+
+group_uniforms depth;
+uniform int layers : hint_range(0, 64, 1) = 8;
+uniform float depth_amount = 1.0;
+uniform float fade_amount : hint_range(0.0, 16.0, 0.01) = 1.0;
+
+vec2 to_polar(vec2 uv) {
+	uv = uv * 2.0 - 1.0;
+	float radius = length(uv);
+	float angle = atan(uv.x, uv.y);
+	return vec2(angle / PI, radius) / 2.0;
+}
+
+float overlay(float a, float b){
+	float limit = step(0.5, a);
+	return mix(2.0 * a * b, 1.0 - 2.0 * (1.0 - a) * (1.0 - b), limit);
+}
+
+vec2 parallax(float depth, vec3 n, vec3 t, vec3 v) {
+	vec3 normal = normalize(n);
+	vec3 tangent = normalize(t);
+	vec3 bitangent = cross(normal, tangent);
+	vec3 view = normalize(v);
+	vec3 view_tangent = vec3(dot(view, tangent), dot(view, bitangent), dot(view, normal));
+	vec2 offset = (view_tangent.xy / max(view_tangent.z, 0.001)) * depth;
+	offset = vec2(-offset.x, offset.y);
+	
+	return offset;
+}
+
+void fragment() {
+	float value = 0.0;
+	
+	for(int i = 0; i < layers; i++){
+		float t = float(i) / float(layers);
+		float depth = t * depth_amount;
+		
+		vec2 circle_uv = UV + parallax(depth, NORMAL, TANGENT, VIEW);
+		float circle = length(circle_uv * 2.0 - 1.0);
+		
+		circle = clamp((circle - 0.2) / 0.8, 0.0, 1.0);
+		
+		vec2 noise_uv = UV + parallax(depth, NORMAL, TANGENT, VIEW);
+		noise_uv = to_polar(noise_uv);
+		noise_uv.y += TIME * 0.1;
+		noise_uv += t;
+		float noise = texture(noise_texture, noise_uv).r;
+		
+		float layer_value = overlay(circle, noise);
+		layer_value = step(0.5, layer_value);
+		if (i == 0 && layer_value == 1.0)
+			discard;
+		
+		layer_value *= pow(1.0 - t, fade_amount);
+		
+		value = max(value, layer_value);
+	}
+	
+	ALBEDO = vec3(value);
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vivmo"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2cqfq"]
+noise = SubResource("FastNoiseLite_vivmo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
+render_priority = 0
+shader = SubResource("Shader_w48qg")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_2cqfq")
+shader_parameter/layers = 8
+shader_parameter/depth_amount = 2.0
+shader_parameter/fade_amount = 1.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4kaam"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_707dm"]
+noise = SubResource("FastNoiseLite_4kaam")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_074og"]
+viewport_path = NodePath("World/Mirror3D/Viewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cegan"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("12_yaehf")
+shader_parameter/color = Color(0.9019608, 0.99215686, 0.49411765, 1)
+shader_parameter/mirror_texture_linear = SubResource("ViewportTexture_074og")
+shader_parameter/use_mirror_texture_linear = true
+shader_parameter/distortion_texture = SubResource("NoiseTexture2D_707dm")
+shader_parameter/distortion_strength = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_82xsv"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_cegan")
+size = Vector2(1, 2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_getpj"]
+size = Vector2(1.1, 2.1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_074og"]
 resource_local_to_scene = true
 size = Vector2(3, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_w48qg"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_cegan"]
 viewport_path = NodePath("NetworkGatewayViewport/Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vivmo"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_82xsv"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_w48qg")
+albedo_texture = SubResource("ViewportTexture_cegan")
 texture_filter = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_2cqfq"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_getpj"]
 resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
 
 [node name="Main" type="Node3D" unique_id=858080943]
+script = ExtResource("1_w48qg")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=2104808566]
 
@@ -89,6 +201,7 @@ tracker = &"right_hand"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
 
 [node name="XRSimulator" parent="XROrigin3D" unique_id=1311045107 instance=ExtResource("5_lquwl")]
+enabled = false
 
 [node name="PlayerBody" parent="XROrigin3D" unique_id=337536217 instance=ExtResource("9_ycdy4")]
 
@@ -110,6 +223,32 @@ light_energy = 3.592
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World" unique_id=112167591]
 environment = SubResource("Environment_1bvp3")
 
+[node name="PortalExample" type="MeshInstance3D" parent="World" unique_id=1627013592]
+transform = Transform3D(0.8643889, 0, 0.5028238, 0, 1, 0, -0.5028238, 0, 0.8643889, -0.7442544, 0.6548592, -0.9918668)
+mesh = SubResource("QuadMesh_ycdy4")
+surface_material_override/0 = SubResource("ShaderMaterial_yaehf")
+
+[node name="Mirror3D" parent="World" unique_id=15685827 instance=ExtResource("11_2cqfq")]
+transform = Transform3D(0.5364456, 0, -0.84393495, 0, 1, 0, 0.84393495, 0, 0.5364456, 2.3407874, 0.68048704, -1.3084708)
+size = Vector2(1, 2)
+color = Color(0.9019608, 0.99215686, 0.49411765, 1)
+
+[node name="Viewport" parent="World/Mirror3D" index="0"]
+size = Vector2i(200, 400)
+
+[node name="Camera" parent="World/Mirror3D/Viewport" index="0"]
+transform = Transform3D(-0.53644556, 0, 0.84393495, 0, 1, 0, -0.84393495, 0, -0.53644556, 5.5640287, 1.778356, -2.2945995)
+frustum_offset = Vector2(0.89686507, -1.0978689)
+near = 3.2992103
+far = 53.545002
+
+[node name="Quad" parent="World/Mirror3D" index="1"]
+mesh = SubResource("QuadMesh_82xsv")
+
+[node name="MeshInstanceBorder" type="MeshInstance3D" parent="World/Mirror3D" unique_id=923077686]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, -0.01)
+mesh = SubResource("QuadMesh_getpj")
+
 [node name="NetworkGatewayViewport" parent="." unique_id=1130742234 instance=ExtResource("11_dg77c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9929738, -3.2379038)
 viewport_size = Vector2(650, 400)
@@ -127,14 +266,14 @@ localplayerscene = ""
 text = "lime"
 
 [node name="Screen" parent="NetworkGatewayViewport" index="1"]
-mesh = SubResource("QuadMesh_ycdy4")
-surface_material_override/0 = SubResource("StandardMaterial3D_vivmo")
+mesh = SubResource("QuadMesh_074og")
+surface_material_override/0 = SubResource("StandardMaterial3D_82xsv")
 
 [node name="StaticBody3D" parent="NetworkGatewayViewport" index="2"]
 viewport_size = Vector2(650, 400)
 
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
-shape = SubResource("BoxShape3D_2cqfq")
+shape = SubResource("BoxShape3D_getpj")
 
 [node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
 
@@ -143,5 +282,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
 
 [node name="PlayerFrame" parent="PlayerAvatars/VRPlayerAvatar" unique_id=967951852 instance=ExtResource("14_w48qg")]
 
+[connection signal="xr_failed_to_initialize" from="XROrigin3D/StartXR" to="." method="_on_start_xr_xr_failed_to_initialize"]
+
+[editable path="World/Mirror3D"]
 [editable path="NetworkGatewayViewport"]
 [editable path="NetworkGatewayViewport/Viewport/NetworkGateway"]
