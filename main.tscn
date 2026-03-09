@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="9_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://delu2qjrw6teu" path="res://addons/Mirror3D/Mirror3D.tscn" id="11_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="11_dg77c"]
+[ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://assets_thirdparty/stylized-sky/examples/day_sky.tres" id="11_yaehf"]
 [ext_resource type="Shader" uid="uid://bjf6fmae00yno" path="res://addons/Mirror3D/Mirror3D.gdshader" id="12_yaehf"]
 [ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="12_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="13_ycdy4"]
@@ -34,10 +35,8 @@ size = Vector3(10, 1, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
 size = Vector3(10, 1, 10)
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
-
 [sub_resource type="Sky" id="Sky_h2yge"]
-sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
+sky_material = ExtResource("11_yaehf")
 
 [sub_resource type="Environment" id="Environment_1bvp3"]
 background_mode = 2
@@ -217,8 +216,9 @@ mesh = SubResource("BoxMesh_lquwl")
 shape = SubResource("BoxShape3D_7mycd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=410131671]
-transform = Transform3D(0.93320465, -0.20871377, 0.29251954, 0, 0.81403446, 0.5808167, -0.35934538, -0.5420208, 0.7596607, 0, 3.990271, 0)
+transform = Transform3D(0.9332047, -0.20871378, 0.29251954, 0.026180245, 0.8513603, 0.5239278, -0.35839045, -0.48127362, 0.79995763, 0, 3.990271, 0)
 light_energy = 3.592
+shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World" unique_id=112167591]
 environment = SubResource("Environment_1bvp3")
@@ -237,10 +237,10 @@ color = Color(0.9019608, 0.99215686, 0.49411765, 1)
 size = Vector2i(200, 400)
 
 [node name="Camera" parent="World/Mirror3D/Viewport" index="0"]
-transform = Transform3D(-0.53644556, 0, 0.84393495, 0, 1, 0, -0.84393495, 0, -0.53644556, 5.5640287, 1.778356, -2.2945995)
-frustum_offset = Vector2(0.89686507, -1.0978689)
-near = 3.2992103
-far = 53.545002
+transform = Transform3D(-0.5364456, 0, 0.8439349, 0, 1, 0, -0.84393495, 0, -0.53644556, 8.307007, 1.1457887, -5.184216)
+frustum_offset = Vector2(-0.07032442, -0.46530163)
+near = 7.1642275
+far = 57.129776
 
 [node name="Quad" parent="World/Mirror3D" index="1"]
 mesh = SubResource("QuadMesh_82xsv")
