@@ -60,16 +60,12 @@ const DEFAULT_LAYER := 0b0000_0000_0101_0000_0000_0000_0000_0001
 @export var screen_size : Vector2 = Vector2(3.0, 2.0): set = set_screen_size
 
 ## Viewport collision enabled property
-@export var enabled : bool = true: set = set_enabled
 
 ## Collision layer
 @export_flags_3d_physics var collision_layer : int = DEFAULT_LAYER: set = set_collision_layer
 
 # Content property group
 @export_group("Content")
-
-## Scene property
-@export var scene : PackedScene: set = set_scene
 
 ## Viewport size property
 @export var viewport_size : Vector2 = Vector2(300.0, 200.0): set = set_viewport_size
@@ -79,15 +75,6 @@ const DEFAULT_LAYER := 0b0000_0000_0101_0000_0000_0000_0000_0001
 
 ## Update throttle property
 @export var throttle_fps : float = 30.0
-
-# Input property group
-@export_group("Input")
-
-## Allow physical keyboard input to viewport
-@export var input_keyboard : bool = true
-
-## Allow gamepad input to viewport
-@export var input_gamepad : bool = false
 
 # Rendering property group
 @export_group("Rendering")
@@ -102,7 +89,7 @@ var transparent : TransparancyMode = TransparancyMode.TRANSPARENT: set = set_tra
 var alpha_scissor_threshold : float = 0.25: set = set_alpha_scissor_threshold
 
 ## Unshaded flag (ignored when custom material provided)
-var unshaded : bool = false: set = set_unshaded
+var unshaded : bool = true: set = set_unshaded
 
 ## Filtering flag (ignored when custom material provided)
 var filter : bool = true: set = set_filter
@@ -141,7 +128,6 @@ func _ready():
 
 	# Apply physics properties
 	_update_screen_size()
-	_update_enabled()
 	_update_collision_layer()
 
 	# Update the render objects
@@ -317,23 +303,21 @@ func connect_scene_signal(which : String, callback : Callable, flags : int = 0):
 
 
 # Handle pointer event from screen-body
+var MDown = false
 func _on_pointer_event(event : XRToolsPointerEvent) -> void:
 	pointer_event.emit(event)
 
+	var at = $StaticBody3D.global_to_viewport(event.position)
+	var last = $StaticBody3D.global_to_viewport(event.last_position)
 
-# Handler for input events
-func _input(event):
-	pass
-	# Map keyboard events to the viewport if enabled
-#	if input_keyboard and (event is InputEventKey or event is InputEventShortcut):
-#		$Viewport.push_input(event)
-#		return
-
-	# Map gamepad events to the viewport if enable
-#	if input_gamepad and (event is InputEventJoypadButton or event is InputEventJoypadMotion):
-#		$Viewport.push_input(event)
-#		return
-
+	if event.event_type == XRToolsPointerEvent.Type.PRESSED:
+		$FluidViewports.start_dye(Color.from_hsv(randf(), 0.5, 1.0))
+		MDown = true
+	elif event.event_type == XRToolsPointerEvent.Type.RELEASED:
+		$FluidViewports.stop_dye()
+		MDown = false
+	elif event.event_type == XRToolsPointerEvent.Type.MOVED and MDown:
+		$FluidViewports.splat(at/viewport_size, (at - last)/viewport_size*50)
 
 # Process event
 func _process(delta):
@@ -368,7 +352,6 @@ func _on_visibility_changed() -> void:
 			CanvasItem.NOTIFICATION_VISIBILITY_CHANGED)
 
 	# Update collision and rendering based on visibility
-	_update_enabled()
 	_dirty |= _DIRTY_UPDATE
 	_update_render()
 
@@ -380,12 +363,6 @@ func set_screen_size(new_size: Vector2) -> void:
 		_update_screen_size()
 
 
-## Set enabled property
-func set_enabled(is_enabled: bool) -> void:
-	enabled = is_enabled
-	if is_ready:
-		_update_enabled()
-
 
 ## Set collision layer property
 func set_collision_layer(new_layer: int) -> void:
@@ -393,13 +370,6 @@ func set_collision_layer(new_layer: int) -> void:
 	if is_ready:
 		_update_collision_layer()
 
-
-## Set scene property
-func set_scene(new_scene: PackedScene) -> void:
-	scene = new_scene
-	_dirty |= _DIRTY_SCENE
-	if is_ready:
-		_update_render()
 
 
 ## Set viewport size property
@@ -474,14 +444,6 @@ func _update_screen_size() -> void:
 			0.02)
 
 
-# Enabled update handler
-func _update_enabled() -> void:
-	if Engine.is_editor_hint():
-		return
-
-	$StaticBody3D/CollisionShape3D.disabled = !enabled or not is_visible_in_tree()
-
-
 # Collision layer update handler
 func _update_collision_layer() -> void:
 	$StaticBody3D.collision_layer = collision_layer
@@ -530,38 +492,6 @@ func _update_render() -> void:
 	if not _screen_material:
 		return
 
-	# Handle scene change
-	if false and (_dirty & _DIRTY_SCENE):
-		_dirty &= ~_DIRTY_SCENE
-
-		# Out with the old
-		if is_instance_valid(scene_node):
-			if scene_node.property_list_changed.is_connected(_update_scene_property_list):
-				scene_node.property_list_changed.disconnect(_update_scene_property_list)
-			$Viewport.remove_child(scene_node)
-			scene_node.queue_free()
-			_update_scene_property_list()
-
-		# In with the new
-		if scene:
-			# Instantiate provided scene
-			scene_node = scene.instantiate()
-			_update_scene_property_list()
-			scene_node.property_list_changed.connect(_update_scene_property_list)
-
-			# Apply the scene proxy configuration on the first load
-			for key in scene_properties_keys:
-				if scene_proxy_configuration.has(key):
-					scene_node.set(key, scene_proxy_configuration[key])
-
-			# Finally add it to the scene, so values are available in _ready
-			$Viewport.add_child(scene_node)
-		elif $Viewport.get_child_count() == 1:
-			# Use already-provided scene
-			scene_node = $Viewport.get_child(0)
-
-		# Ensure the new scene is rendered at least once
-		_dirty |= _DIRTY_REDRAW
 
 	# Handle viewport size change
 	if _dirty & _DIRTY_SIZE:
