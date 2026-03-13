@@ -12,21 +12,18 @@
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="9_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://delu2qjrw6teu" path="res://addons/Mirror3D/Mirror3D.tscn" id="11_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="11_dg77c"]
-[ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://assets_thirdparty/stylized-sky/examples/day_sky.tres" id="11_yaehf"]
+[ext_resource type="Texture2D" uid="uid://87p0chjsmdg4" path="res://assets_thirdparty/simplebitmaps/grid_black_1024x1024.png" id="11_yaehf"]
 [ext_resource type="Shader" uid="uid://bjf6fmae00yno" path="res://addons/Mirror3D/Mirror3D.gdshader" id="12_yaehf"]
 [ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="12_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="13_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://djehrm378cbde" path="res://addons/player-networking/PlayerFrameLocal.tscn" id="14_w48qg"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0xm2m"]
-frequency = 0.2215
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h2yge"]
-noise = SubResource("FastNoiseLite_0xm2m")
+[ext_resource type="Script" uid="uid://b3caqkjpjtln" path="res://fluid_viewport.gd" id="18_82xsv"]
+[ext_resource type="PackedScene" uid="uid://xtho5gxeed1j" path="res://addons/two-d-fluid-simulation/fluid_viewports.tscn" id="19_82xsv"]
+[ext_resource type="Script" uid="uid://cpl5yiyf1ypft" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d_body.gd" id="20_ryguw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
-albedo_color = Color(0.03529412, 0.37254903, 0.101960786, 1)
-albedo_texture = SubResource("NoiseTexture2D_h2yge")
+albedo_texture = ExtResource("11_yaehf")
+uv1_scale = Vector3(10, 10, 10)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lquwl"]
 material = SubResource("StandardMaterial3D_1bvp3")
@@ -35,8 +32,10 @@ size = Vector3(10, 1, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
 size = Vector3(10, 1, 10)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_074og"]
+
 [sub_resource type="Sky" id="Sky_h2yge"]
-sky_material = ExtResource("11_yaehf")
+sky_material = SubResource("ProceduralSkyMaterial_074og")
 
 [sub_resource type="Environment" id="Environment_1bvp3"]
 background_mode = 2
@@ -129,41 +128,57 @@ shader_parameter/fade_amount = 1.0
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_707dm"]
 noise = SubResource("FastNoiseLite_4kaam")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_yaehf"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_getpj"]
 viewport_path = NodePath("World/Mirror3D/Viewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryguw"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("12_yaehf")
 shader_parameter/color = Color(0.9019608, 0.99215686, 0.49411765, 1)
-shader_parameter/mirror_texture_linear = SubResource("ViewportTexture_yaehf")
+shader_parameter/mirror_texture_linear = SubResource("ViewportTexture_getpj")
 shader_parameter/use_mirror_texture_linear = true
 shader_parameter/distortion_texture = SubResource("NoiseTexture2D_707dm")
 shader_parameter/distortion_strength = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_cegan"]
+[sub_resource type="QuadMesh" id="QuadMesh_1u8w0"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_074og")
+material = SubResource("ShaderMaterial_ryguw")
 size = Vector2(1, 2)
 
 [sub_resource type="QuadMesh" id="QuadMesh_getpj"]
 size = Vector2(1.1, 2.1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_82xsv"]
+[sub_resource type="QuadMesh" id="QuadMesh_0odxb"]
 resource_local_to_scene = true
 size = Vector2(3, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_getpj"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_lswn8"]
 viewport_path = NodePath("NetworkGatewayViewport/Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryguw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6jrf"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_getpj")
+albedo_texture = SubResource("ViewportTexture_lswn8")
 texture_filter = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_d13ii"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_xuqvo"]
+resource_local_to_scene = true
+size = Vector3(3, 2, 0.02)
+
+[sub_resource type="QuadMesh" id="QuadMesh_d13ii"]
+resource_local_to_scene = true
+size = Vector2(3, 2)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_82xsv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0odxb"]
+transparency = 1
+cull_mode = 2
+albedo_texture = SubResource("ViewportTexture_82xsv")
+texture_filter = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lswn8"]
 resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
 
@@ -206,13 +221,13 @@ enabled = false
 
 [node name="World" type="Node3D" parent="." unique_id=1711002190]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="World" unique_id=998891937]
+[node name="FloorBody" type="StaticBody3D" parent="World" unique_id=998891937]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World/StaticBody3D" unique_id=833803378]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/FloorBody" unique_id=833803378]
 mesh = SubResource("BoxMesh_lquwl")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/StaticBody3D" unique_id=1037734184]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/FloorBody" unique_id=1037734184]
 shape = SubResource("BoxShape3D_7mycd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=410131671]
@@ -225,6 +240,7 @@ environment = SubResource("Environment_1bvp3")
 
 [node name="PortalExample" type="MeshInstance3D" parent="World" unique_id=1627013592]
 transform = Transform3D(0.8643889, 0, 0.5028238, 0, 1, 0, -0.5028238, 0, 0.8643889, -0.7442544, 0.6548592, -0.9918668)
+visible = false
 mesh = SubResource("QuadMesh_ycdy4")
 surface_material_override/0 = SubResource("ShaderMaterial_yaehf")
 
@@ -237,13 +253,13 @@ color = Color(0.9019608, 0.99215686, 0.49411765, 1)
 size = Vector2i(200, 400)
 
 [node name="Camera" parent="World/Mirror3D/Viewport" index="0"]
-transform = Transform3D(-0.5364456, 0, 0.8439349, 0, 1, 0, -0.84393495, 0, -0.53644556, 8.307007, 1.1457887, -5.184216)
-frustum_offset = Vector2(-0.07032442, -0.46530163)
-near = 7.1642275
-far = 57.129776
+transform = Transform3D(0.5364456, 0, -0.8439349, 0, 1, 0, 0.84393495, 0, 0.53644556, 2.0763419, 4.2859597, 2.661167)
+frustum_offset = Vector2(-3.208255, -3.6054726)
+near = 2.4026697
+far = 55.369114
 
 [node name="Quad" parent="World/Mirror3D" index="1"]
-mesh = SubResource("QuadMesh_cegan")
+mesh = SubResource("QuadMesh_1u8w0")
 
 [node name="MeshInstanceBorder" type="MeshInstance3D" parent="World/Mirror3D" unique_id=923077686]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, -0.01)
@@ -252,10 +268,8 @@ mesh = SubResource("QuadMesh_getpj")
 [node name="NetworkGatewayViewport" parent="." unique_id=1130742234 instance=ExtResource("11_dg77c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9929738, -3.2379038)
 viewport_size = Vector2(650, 400)
-transparent = 1
-scene_properties_keys = PackedStringArray()
 
-[node name="Viewport" parent="NetworkGatewayViewport" index="0"]
+[node name="Viewport" parent="NetworkGatewayViewport" index="0" unique_id=1967651754]
 size = Vector2i(650, 400)
 
 [node name="NetworkGateway" parent="NetworkGatewayViewport/Viewport" index="0" unique_id=407170005 instance=ExtResource("12_ycdy4")]
@@ -265,15 +279,15 @@ localplayerscene = ""
 [node name="roomname" parent="NetworkGatewayViewport/Viewport/NetworkGateway/VBox/TabContainer/MQTTsignalling/VBox/HBoxM/HSplitContainer/Msettings/HBox" parent_id_path=PackedInt32Array(407170005, 804249689) index="1" unique_id=113252904]
 text = "lime"
 
-[node name="Screen" parent="NetworkGatewayViewport" index="1"]
-mesh = SubResource("QuadMesh_82xsv")
-surface_material_override/0 = SubResource("StandardMaterial3D_ryguw")
+[node name="Screen" parent="NetworkGatewayViewport" index="1" unique_id=1829703966]
+mesh = SubResource("QuadMesh_0odxb")
+surface_material_override/0 = SubResource("StandardMaterial3D_a6jrf")
 
-[node name="StaticBody3D" parent="NetworkGatewayViewport" index="2"]
+[node name="StaticBody3D" parent="NetworkGatewayViewport" index="2" unique_id=72373557]
 viewport_size = Vector2(650, 400)
 
-[node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
-shape = SubResource("BoxShape3D_d13ii")
+[node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0" unique_id=1100798892]
+shape = SubResource("BoxShape3D_xuqvo")
 
 [node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
 
@@ -281,6 +295,26 @@ shape = SubResource("BoxShape3D_d13ii")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
 
 [node name="PlayerFrame" parent="PlayerAvatars/VRPlayerAvatar" unique_id=967951852 instance=ExtResource("14_w48qg")]
+
+[node name="ViewportFluid" type="Node3D" parent="." unique_id=1289572990]
+transform = Transform3D(0.91867405, 0, 0.39501646, 0, 1, 0, -0.39501646, 0, 0.91867405, -2.0494008, 1.4801595, -1.6769688)
+script = ExtResource("18_82xsv")
+
+[node name="FluidViewports" parent="ViewportFluid" unique_id=2001552246 instance=ExtResource("19_82xsv")]
+
+[node name="Screen" type="MeshInstance3D" parent="ViewportFluid" unique_id=681659599]
+mesh = SubResource("QuadMesh_d13ii")
+surface_material_override/0 = SubResource("StandardMaterial3D_0odxb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ViewportFluid" unique_id=532307647]
+collision_layer = 5242881
+collision_mask = 0
+script = ExtResource("20_ryguw")
+viewport_size = Vector2(300, 200)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ViewportFluid/StaticBody3D" unique_id=139384158]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01)
+shape = SubResource("BoxShape3D_lswn8")
 
 [connection signal="xr_failed_to_initialize" from="XROrigin3D/StartXR" to="." method="_on_start_xr_xr_failed_to_initialize"]
 

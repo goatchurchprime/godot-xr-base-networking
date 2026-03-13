@@ -12,3 +12,5 @@ func _plugging():
 	plug("goatchurchprime/godot_multiplayer_networking_workbench", {"include": ["addons/player-networking"], "branch":"main"})
 	plug("goatchurchprime/two-voip-addon", {"branch": "v4.1"})
 	plug("goatchurchprime/godot-webrtc-addon", {"branch": "v1.1.0"})
+
+	plug("goatchurchprime/godot-fluid-simulation", {"branch": "main"})
