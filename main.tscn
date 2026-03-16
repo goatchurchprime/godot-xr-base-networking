@@ -6,9 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://hpr0v012ghsb" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_tac_glove.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="4_4c57u"]
 [ext_resource type="PackedScene" uid="uid://dup2vp8v5rpi5" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_tac_glove.tscn" id="4_lquwl"]
+[ext_resource type="PackedScene" uid="uid://wtpox7m5vu2b" path="res://addons/godot-xr-tools/effects/fade.tscn" id="4_yaehf"]
 [ext_resource type="PackedScene" uid="uid://ctltchlf2j2r4" path="res://addons/xr-simulator/XRSimulator.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="6_efxa6"]
 [ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="7_dg77c"]
+[ext_resource type="PackedScene" uid="uid://c2q5phg8w08o" path="res://addons/godot-xr-tools/functions/movement_jump.tscn" id="9_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="9_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://bsiedtp4g4es1" path="res://assets_thirdparty/spare_textures/grid_black_512x512.png" id="11_074og"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="11_dg77c"]
@@ -25,7 +27,7 @@ material = SubResource("StandardMaterial3D_1bvp3")
 size = Vector3(50, 1, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
-size = Vector3(50, 1, 50)
+size = Vector3(10, 1, 10)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vivmo"]
 
@@ -65,6 +67,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1355605, 0)
 
 [node name="VRCommonShaderCache" parent="XROrigin3D/XRCamera3D" unique_id=96670224 instance=ExtResource("2_h2yge")]
 
+[node name="Fade" parent="XROrigin3D/XRCamera3D" unique_id=1653719081 instance=ExtResource("4_yaehf")]
+
 [node name="XRController3D_left" type="XRController3D" parent="XROrigin3D" unique_id=1578896574]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1938979, 1.0335946, -0.44095612)
 tracker = &"left_hand"
@@ -84,6 +88,8 @@ tracker = &"right_hand"
 
 [node name="FunctionPointer" parent="XROrigin3D/XRController3D_right" unique_id=1192855557 instance=ExtResource("7_dg77c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
+
+[node name="MovementJump" parent="XROrigin3D/XRController3D_right" unique_id=1805752777 instance=ExtResource("9_2cqfq")]
 
 [node name="XRSimulator" parent="XROrigin3D" unique_id=1311045107 instance=ExtResource("5_lquwl")]
 enabled = false
