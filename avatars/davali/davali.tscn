@@ -7,28 +7,28 @@
 [ext_resource type="Texture2D" uid="uid://du0gbh20ck8r8" path="res://avatars/davali/Feathers_AlbedoTransparency4.jpg" id="5_kfsj1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_budmv"]
-albedo_texture = ExtResource("2_ri2o2")
+albedo_texture = ExtResource("3_flaq4")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4tj70"]
 cull_mode = 2
-albedo_texture = ExtResource("3_flaq4")
+albedo_texture = ExtResource("5_kfsj1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p7p11"]
 albedo_texture = ExtResource("4_uiogv")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gu651"]
-albedo_texture = ExtResource("5_kfsj1")
+albedo_texture = ExtResource("2_ri2o2")
 
-[node name="davali" instance=ExtResource("1_qm27a")]
+[node name="davali" unique_id=1742228799 instance=ExtResource("1_qm27a")]
 
-[node name="Body" parent="Armature/Skeleton3D" index="0"]
+[node name="Body" parent="Armature/Skeleton3D" parent_id_path=PackedInt32Array(1735986632) index="0" unique_id=1692176171]
 surface_material_override/0 = SubResource("StandardMaterial3D_budmv")
 surface_material_override/1 = SubResource("StandardMaterial3D_4tj70")
 surface_material_override/2 = SubResource("StandardMaterial3D_p7p11")
 surface_material_override/3 = SubResource("StandardMaterial3D_gu651")
 
-[node name="SpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Armature/Skeleton3D" index="1"]
-setting_count = 7
+[node name="SpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Armature/Skeleton3D" parent_id_path=PackedInt32Array(1735986632) index="1" unique_id=1959240675]
+setting_count = 6
 settings/0/root_bone_name = "UpperEars_L"
 settings/0/root_bone = 9
 settings/0/end_bone_name = "UpperEarsEnd_L"
@@ -37,7 +37,7 @@ settings/0/extend_end_bone = false
 settings/0/center_from = 0
 settings/0/individual_config = false
 settings/0/rotation_axis = 3
-settings/0/radius/value = 0.02
+settings/0/radius/value = 0.04
 settings/0/radius/damping_curve = null
 settings/0/stiffness/value = 1.0
 settings/0/stiffness/damping_curve = null
@@ -46,13 +46,18 @@ settings/0/drag/damping_curve = null
 settings/0/gravity/value = 0.0
 settings/0/gravity/damping_curve = null
 settings/0/gravity/direction = Vector3(0, -1, 0)
+settings/0/joints/0/bone_name = "UpperEars_L"
+settings/0/joints/0/bone = 9
+settings/0/joints/1/bone_name = "UpperEarsMid_L"
+settings/0/joints/1/bone = 10
+settings/0/joints/2/bone_name = "UpperEarsEnd_L"
+settings/0/joints/2/bone = 11
 settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
-settings/1/root_bone_name = "UpperEars_R"
-settings/1/root_bone = 6
-settings/1/end_bone_name = "UpperEarsEnd_R"
-settings/1/end_bone = 8
-settings/1/extend_end_bone = false
+settings/1/root_bone_name = ""
+settings/1/root_bone = -1
+settings/1/end_bone_name = ""
+settings/1/end_bone = -1
 settings/1/center_from = 0
 settings/1/individual_config = false
 settings/1/rotation_axis = 3
@@ -67,10 +72,10 @@ settings/1/gravity/damping_curve = null
 settings/1/gravity/direction = Vector3(0, -1, 0)
 settings/1/enable_all_child_collisions = true
 settings/1/exclude_collision_count = 0
-settings/2/root_bone_name = "LowerEars_R"
-settings/2/root_bone = 12
-settings/2/end_bone_name = "LowerEarsEnd_R"
-settings/2/end_bone = 14
+settings/2/root_bone_name = "UpperEars_R"
+settings/2/root_bone = 6
+settings/2/end_bone_name = "UpperEarsEnd_R"
+settings/2/end_bone = 8
 settings/2/extend_end_bone = false
 settings/2/center_from = 0
 settings/2/individual_config = false
@@ -84,6 +89,12 @@ settings/2/drag/damping_curve = null
 settings/2/gravity/value = 0.0
 settings/2/gravity/damping_curve = null
 settings/2/gravity/direction = Vector3(0, -1, 0)
+settings/2/joints/0/bone_name = "UpperEars_R"
+settings/2/joints/0/bone = 6
+settings/2/joints/1/bone_name = "UpperEarsMid_R"
+settings/2/joints/1/bone = 7
+settings/2/joints/2/bone_name = "UpperEarsEnd_R"
+settings/2/joints/2/bone = 8
 settings/2/enable_all_child_collisions = true
 settings/2/exclude_collision_count = 0
 settings/3/root_bone_name = "LowerEars_L"
@@ -103,62 +114,76 @@ settings/3/drag/damping_curve = null
 settings/3/gravity/value = 0.0
 settings/3/gravity/damping_curve = null
 settings/3/gravity/direction = Vector3(0, -1, 0)
+settings/3/joints/0/bone_name = "LowerEars_L"
+settings/3/joints/0/bone = 15
+settings/3/joints/1/bone_name = "LowerEarsMid_L"
+settings/3/joints/1/bone = 16
+settings/3/joints/2/bone_name = "LowerEarsEnd_L"
+settings/3/joints/2/bone = 17
 settings/3/enable_all_child_collisions = true
 settings/3/exclude_collision_count = 0
-settings/4/root_bone_name = "Root_Tail"
-settings/4/root_bone = 71
-settings/4/end_bone_name = "Root_Tail_007"
-settings/4/end_bone = 78
+settings/4/root_bone_name = "LowerEars_R"
+settings/4/root_bone = 12
+settings/4/end_bone_name = "LowerEarsEnd_R"
+settings/4/end_bone = 14
 settings/4/extend_end_bone = false
 settings/4/center_from = 0
 settings/4/individual_config = false
 settings/4/rotation_axis = 3
-settings/4/radius/value = 0.046
+settings/4/radius/value = 0.02
 settings/4/radius/damping_curve = null
-settings/4/stiffness/value = 0.51
+settings/4/stiffness/value = 1.0
 settings/4/stiffness/damping_curve = null
-settings/4/drag/value = 0.76
+settings/4/drag/value = 0.4
 settings/4/drag/damping_curve = null
 settings/4/gravity/value = 0.0
 settings/4/gravity/damping_curve = null
 settings/4/gravity/direction = Vector3(0, -1, 0)
+settings/4/joints/0/bone_name = "LowerEars_R"
+settings/4/joints/0/bone = 12
+settings/4/joints/1/bone_name = "LowerEarsMid_R"
+settings/4/joints/1/bone = 13
+settings/4/joints/2/bone_name = "LowerEarsEnd_R"
+settings/4/joints/2/bone = 14
 settings/4/enable_all_child_collisions = true
 settings/4/exclude_collision_count = 0
-settings/5/root_bone_name = "HairParent"
-settings/5/root_bone = 20
-settings/5/end_bone_name = "HeadFeathers1_Left"
-settings/5/end_bone = 25
+settings/5/root_bone_name = "Root_Tail"
+settings/5/root_bone = 71
+settings/5/end_bone_name = "Root_Tail_007"
+settings/5/end_bone = 78
 settings/5/extend_end_bone = false
 settings/5/center_from = 0
 settings/5/individual_config = false
 settings/5/rotation_axis = 3
-settings/5/radius/value = 0.02
+settings/5/radius/value = 0.06
 settings/5/radius/damping_curve = null
-settings/5/stiffness/value = 3.1
+settings/5/stiffness/value = 1.0
 settings/5/stiffness/damping_curve = null
 settings/5/drag/value = 0.4
 settings/5/drag/damping_curve = null
 settings/5/gravity/value = 0.0
 settings/5/gravity/damping_curve = null
 settings/5/gravity/direction = Vector3(0, -1, 0)
+settings/5/joints/0/bone_name = "Root_Tail"
+settings/5/joints/0/bone = 71
+settings/5/joints/1/bone_name = "Root_Tail_001"
+settings/5/joints/1/bone = 72
+settings/5/joints/2/bone_name = "Root_Tail_002"
+settings/5/joints/2/bone = 73
+settings/5/joints/3/bone_name = "Root_Tail_003"
+settings/5/joints/3/bone = 74
+settings/5/joints/4/bone_name = "Root_Tail_004"
+settings/5/joints/4/bone = 75
+settings/5/joints/5/bone_name = "Root_Tail_005"
+settings/5/joints/5/bone = 76
+settings/5/joints/6/bone_name = "Root_Tail_006"
+settings/5/joints/6/bone = 77
+settings/5/joints/7/bone_name = "Root_Tail_007"
+settings/5/joints/7/bone = 78
 settings/5/enable_all_child_collisions = true
 settings/5/exclude_collision_count = 0
-settings/6/root_bone_name = "HairParent"
-settings/6/root_bone = 20
-settings/6/end_bone_name = "HeadFeathers1_Right"
-settings/6/end_bone = 26
-settings/6/extend_end_bone = false
-settings/6/center_from = 0
-settings/6/individual_config = false
-settings/6/rotation_axis = 3
-settings/6/radius/value = 0.02
-settings/6/radius/damping_curve = null
-settings/6/stiffness/value = 1.0
-settings/6/stiffness/damping_curve = null
-settings/6/drag/value = 0.4
-settings/6/drag/damping_curve = null
-settings/6/gravity/value = 0.0
-settings/6/gravity/damping_curve = null
-settings/6/gravity/direction = Vector3(0, -1, 0)
-settings/6/enable_all_child_collisions = true
-settings/6/exclude_collision_count = 0
+
+[node name="SpringBoneCollisionSphere3D" type="SpringBoneCollisionSphere3D" parent="Armature/Skeleton3D/SpringBoneSimulator3D" index="0" unique_id=962582324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4477433, 0.33906266, -0.09695223)
+visible = false
+radius = 0.091

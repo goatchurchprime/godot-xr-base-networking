@@ -15,8 +15,16 @@
 [ext_resource type="Texture2D" uid="uid://bsiedtp4g4es1" path="res://assets_thirdparty/spare_textures/grid_black_512x512.png" id="11_074og"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="11_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="12_ycdy4"]
+[ext_resource type="Script" uid="uid://cjfu28jmrajlo" path="res://addons/godot-xr-tools/overrides/ground_physics_settings.gd" id="13_82xsv"]
 [ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="13_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://djehrm378cbde" path="res://addons/player-networking/PlayerFrameLocal.tscn" id="14_w48qg"]
+[ext_resource type="PackedScene" uid="uid://degjokngkak1a" path="res://avatars/davali/davali.tscn" id="18_074og"]
+[ext_resource type="Script" uid="uid://bo60cmfar2l3b" path="res://head_pat_node.gd" id="18_cegan"]
+
+[sub_resource type="Resource" id="Resource_getpj"]
+script = ExtResource("13_82xsv")
+move_drag = 3.0
+metadata/_custom_type_script = "uid://cjfu28jmrajlo"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
 albedo_texture = ExtResource("11_074og")
@@ -38,22 +46,363 @@ sky_material = SubResource("ProceduralSkyMaterial_vivmo")
 background_mode = 2
 sky = SubResource("Sky_h2yge")
 
-[sub_resource type="QuadMesh" id="QuadMesh_82xsv"]
+[sub_resource type="QuadMesh" id="QuadMesh_cegan"]
 resource_local_to_scene = true
 size = Vector2(3, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_getpj"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_82xsv"]
 viewport_path = NodePath("NetworkGatewayViewport/Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryguw"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_getpj"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_getpj")
+albedo_texture = SubResource("ViewportTexture_82xsv")
 texture_filter = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_d13ii"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ryguw"]
 resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
+
+[sub_resource type="Animation" id="Animation_1xqwv"]
+length = 1.2
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array()
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/3/type = "position_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HeadCam")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array()
+tracks/4/type = "rotation_3d"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HeadCam")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array()
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HeadCam/NameplateLabel3D:text")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/6/type = "position_3d"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("hand_l")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = PackedFloat32Array()
+tracks/7/type = "rotation_3d"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("hand_l")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = PackedFloat32Array()
+tracks/8/type = "position_3d"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("hand_r")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = PackedFloat32Array()
+tracks/9/type = "rotation_3d"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("hand_r")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = PackedFloat32Array()
+tracks/10/type = "rotation_3d"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("hand_l/Armature/Skeleton3D:Index_Metacarpal_L")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = PackedFloat32Array()
+tracks/11/type = "rotation_3d"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("hand_l/Armature/Skeleton3D:Index_Proximal_L")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = PackedFloat32Array()
+tracks/12/type = "rotation_3d"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("hand_l/Armature/Skeleton3D:Index_Intermediate_L")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = PackedFloat32Array()
+tracks/13/type = "rotation_3d"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("hand_l/Armature/Skeleton3D:Index_Distal_L")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = PackedFloat32Array()
+tracks/14/type = "rotation_3d"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("hand_l/Armature/Skeleton3D:Thumb_Metacarpal_L")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = PackedFloat32Array()
+tracks/15/type = "rotation_3d"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("hand_l/Armature/Skeleton3D:Thumb_Proximal_L")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = PackedFloat32Array()
+tracks/16/type = "rotation_3d"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("hand_l/Armature/Skeleton3D:Thumb_Distal_L")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = PackedFloat32Array()
+tracks/17/type = "rotation_3d"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("hand_l/Armature/Skeleton3D:Middle_Proximal_L")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = PackedFloat32Array()
+tracks/18/type = "rotation_3d"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("hand_l/Armature/Skeleton3D:Middle_Intermediate_L")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = PackedFloat32Array()
+tracks/19/type = "rotation_3d"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("hand_l/Armature/Skeleton3D:Middle_Distal_L")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = PackedFloat32Array()
+tracks/20/type = "rotation_3d"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("hand_l/Armature/Skeleton3D:Ring_Proximal_L")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = PackedFloat32Array()
+tracks/21/type = "rotation_3d"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("hand_l/Armature/Skeleton3D:Ring_Intermediate_L")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = PackedFloat32Array()
+tracks/22/type = "rotation_3d"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("hand_l/Armature/Skeleton3D:Ring_Distal_L")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = PackedFloat32Array()
+tracks/23/type = "rotation_3d"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("hand_l/Armature/Skeleton3D:Little_Proximal_L")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = PackedFloat32Array()
+tracks/24/type = "rotation_3d"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("hand_l/Armature/Skeleton3D:Little_Intermediate_L")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = PackedFloat32Array()
+tracks/25/type = "rotation_3d"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("hand_l/Armature/Skeleton3D:Little_Distal_L")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = PackedFloat32Array()
+tracks/26/type = "rotation_3d"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("hand_r/Armature/Skeleton3D:Thumb_Metacarpal_R")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = PackedFloat32Array()
+tracks/27/type = "rotation_3d"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("hand_r/Armature/Skeleton3D:Thumb_Proximal_R")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = PackedFloat32Array()
+tracks/28/type = "rotation_3d"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("hand_r/Armature/Skeleton3D:Thumb_Distal_R")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = PackedFloat32Array()
+tracks/29/type = "rotation_3d"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("hand_r/Armature/Skeleton3D:Index_Metacarpal_R")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = PackedFloat32Array()
+tracks/30/type = "rotation_3d"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("hand_r/Armature/Skeleton3D:Index_Proximal_R")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = PackedFloat32Array()
+tracks/31/type = "rotation_3d"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("hand_r/Armature/Skeleton3D:Index_Intermediate_R")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = PackedFloat32Array()
+tracks/32/type = "rotation_3d"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("hand_r/Armature/Skeleton3D:Index_Distal_R")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = PackedFloat32Array()
+tracks/33/type = "rotation_3d"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("hand_r/Armature/Skeleton3D:Middle_Metacarpal_R")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = PackedFloat32Array()
+tracks/34/type = "rotation_3d"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("hand_r/Armature/Skeleton3D:Middle_Proximal_R")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = PackedFloat32Array()
+tracks/35/type = "rotation_3d"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("hand_r/Armature/Skeleton3D:Middle_Intermediate_R")
+tracks/35/interp = 1
+tracks/35/loop_wrap = true
+tracks/35/keys = PackedFloat32Array()
+tracks/36/type = "rotation_3d"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("hand_r/Armature/Skeleton3D:Middle_Distal_R")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = PackedFloat32Array()
+tracks/37/type = "rotation_3d"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("hand_r/Armature/Skeleton3D:Ring_Metacarpal_R")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/keys = PackedFloat32Array()
+tracks/38/type = "rotation_3d"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("hand_r/Armature/Skeleton3D:Ring_Proximal_R")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/keys = PackedFloat32Array()
+tracks/39/type = "rotation_3d"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("hand_r/Armature/Skeleton3D:Ring_Intermediate_R")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/keys = PackedFloat32Array()
+tracks/40/type = "rotation_3d"
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/path = NodePath("hand_r/Armature/Skeleton3D:Ring_Distal_R")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/keys = PackedFloat32Array()
+tracks/41/type = "rotation_3d"
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/path = NodePath("hand_r/Armature/Skeleton3D:Little_Metacarpal_R")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/keys = PackedFloat32Array()
+tracks/42/type = "rotation_3d"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("hand_r/Armature/Skeleton3D:Little_Proximal_R")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/keys = PackedFloat32Array()
+tracks/43/type = "rotation_3d"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("hand_r/Armature/Skeleton3D:Little_Intermediate_R")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/keys = PackedFloat32Array()
+tracks/44/type = "rotation_3d"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("hand_r/Armature/Skeleton3D:Little_Distal_R")
+tracks/44/interp = 1
+tracks/44/loop_wrap = true
+tracks/44/keys = PackedFloat32Array()
+tracks/45/type = "scale_3d"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("HeadCam/AudioStreamPlayer/MouthSign")
+tracks/45/interp = 1
+tracks/45/loop_wrap = true
+tracks/45/keys = PackedFloat32Array()
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_82xsv"]
+resource_local_to_scene = true
+_data = {
+&"trackstemplate": SubResource("Animation_1xqwv")
+}
 
 [node name="Main" type="Node3D" unique_id=858080943]
 script = ExtResource("1_w48qg")
@@ -95,6 +444,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
 enabled = false
 
 [node name="PlayerBody" parent="XROrigin3D" unique_id=337536217 instance=ExtResource("9_ycdy4")]
+physics = SubResource("Resource_getpj")
 
 [node name="World" type="Node3D" parent="." unique_id=1711002190]
 
@@ -131,23 +481,38 @@ localplayerscene = ""
 text = "lime"
 
 [node name="Screen" parent="NetworkGatewayViewport" index="1" unique_id=1829703966]
-mesh = SubResource("QuadMesh_82xsv")
-surface_material_override/0 = SubResource("StandardMaterial3D_ryguw")
+mesh = SubResource("QuadMesh_cegan")
+surface_material_override/0 = SubResource("StandardMaterial3D_getpj")
 
 [node name="StaticBody3D" parent="NetworkGatewayViewport" index="2" unique_id=72373557]
 viewport_size = Vector2(650, 400)
 
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0" unique_id=1100798892]
-shape = SubResource("BoxShape3D_d13ii")
+shape = SubResource("BoxShape3D_ryguw")
 
 [node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
 
 [node name="VRPlayerAvatar" parent="PlayerAvatars" unique_id=391835606 instance=ExtResource("13_ycdy4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
 
+[node name="PlayerAnimation" parent="PlayerAvatars/VRPlayerAvatar" index="3" unique_id=470521]
+libraries/playeral = SubResource("AnimationLibrary_82xsv")
+
 [node name="PlayerFrame" parent="PlayerAvatars/VRPlayerAvatar" unique_id=967951852 instance=ExtResource("14_w48qg")]
+
+[node name="HeadPatNode" type="Node3D" parent="." unique_id=148137068]
+script = ExtResource("18_cegan")
+
+[node name="davali" parent="HeadPatNode" unique_id=1742228799 instance=ExtResource("18_074og")]
+transform = Transform3D(-0.994228, 0, 0.10728785, 0, 1, 0, -0.10728785, 0, -0.994228, -0.0074774027, 0.8992535, -0.93399245)
 
 [connection signal="xr_failed_to_initialize" from="XROrigin3D/StartXR" to="." method="_on_start_xr_xr_failed_to_initialize"]
 
 [editable path="NetworkGatewayViewport"]
 [editable path="NetworkGatewayViewport/Viewport/NetworkGateway"]
+[editable path="PlayerAvatars/VRPlayerAvatar"]
+[editable path="PlayerAvatars/VRPlayerAvatar/hand_l"]
+[editable path="PlayerAvatars/VRPlayerAvatar/hand_l/Armature/Skeleton3D/BoneAttachment3D"]
+[editable path="PlayerAvatars/VRPlayerAvatar/hand_l/Armature/Skeleton3D/BoneAttachment3D2"]
+[editable path="PlayerAvatars/VRPlayerAvatar/hand_r"]
+[editable path="HeadPatNode/davali"]
