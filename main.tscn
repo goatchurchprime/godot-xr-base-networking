@@ -23,7 +23,7 @@
 
 [sub_resource type="Resource" id="Resource_getpj"]
 script = ExtResource("13_82xsv")
-move_drag = 3.0
+move_drag = 35.0
 metadata/_custom_type_script = "uid://cjfu28jmrajlo"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
@@ -46,20 +46,20 @@ sky_material = SubResource("ProceduralSkyMaterial_vivmo")
 background_mode = 2
 sky = SubResource("Sky_h2yge")
 
-[sub_resource type="QuadMesh" id="QuadMesh_cegan"]
+[sub_resource type="QuadMesh" id="QuadMesh_82xsv"]
 resource_local_to_scene = true
 size = Vector2(3, 2)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_82xsv"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_getpj"]
 viewport_path = NodePath("NetworkGatewayViewport/Viewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_getpj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryguw"]
 transparency = 1
 cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_82xsv")
+albedo_texture = SubResource("ViewportTexture_getpj")
 texture_filter = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ryguw"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_d13ii"]
 resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
 
@@ -398,7 +398,7 @@ tracks/45/interp = 1
 tracks/45/loop_wrap = true
 tracks/45/keys = PackedFloat32Array()
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_82xsv"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1u8w0"]
 resource_local_to_scene = true
 _data = {
 &"trackstemplate": SubResource("Animation_1xqwv")
@@ -481,14 +481,14 @@ localplayerscene = ""
 text = "lime"
 
 [node name="Screen" parent="NetworkGatewayViewport" index="1" unique_id=1829703966]
-mesh = SubResource("QuadMesh_cegan")
-surface_material_override/0 = SubResource("StandardMaterial3D_getpj")
+mesh = SubResource("QuadMesh_82xsv")
+surface_material_override/0 = SubResource("StandardMaterial3D_ryguw")
 
 [node name="StaticBody3D" parent="NetworkGatewayViewport" index="2" unique_id=72373557]
 viewport_size = Vector2(650, 400)
 
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0" unique_id=1100798892]
-shape = SubResource("BoxShape3D_ryguw")
+shape = SubResource("BoxShape3D_d13ii")
 
 [node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
 
@@ -496,7 +496,7 @@ shape = SubResource("BoxShape3D_ryguw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
 
 [node name="PlayerAnimation" parent="PlayerAvatars/VRPlayerAvatar" index="3" unique_id=470521]
-libraries/playeral = SubResource("AnimationLibrary_82xsv")
+libraries/playeral = SubResource("AnimationLibrary_1u8w0")
 
 [node name="PlayerFrame" parent="PlayerAvatars/VRPlayerAvatar" unique_id=967951852 instance=ExtResource("14_w48qg")]
 

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://oiblcuuvss8y"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_i2ttw"]
+radial_segments = 16
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t5veb"]
+transparency = 1
+albedo_color = Color(0.02745098, 1, 1, 0.30588236)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" unique_id=1218772559]
+transform = Transform3D(0.96752554, 0.25232607, -0.015030187, -0.015030141, 0.1167842, 0.9930434, 0.25232598, -0.96056914, 0.11678411, 0, 0, 0)
+bone_name = "Index_Tip_L"
+bone_idx = 9
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1088624536]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+mesh = SubResource("SphereMesh_i2ttw")
+surface_material_override/0 = SubResource("StandardMaterial3D_t5veb")

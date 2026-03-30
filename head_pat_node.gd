@@ -30,14 +30,19 @@ func _ready():
 		var bam = ba.get_child(0)
 		sb.radius = bam.mesh.radius * bam.scale.x
 
-
 	for i in range(springbone.get_setting_count()):
 		print(i)
 		print(springbone.get_root_bone_name(i))
 		print(springbone.get_end_bone_name(i))
 		print(springbone.get_radius(i))
+		var bv = BoneAttachment3D.new()
+		bv.bone_idx = springbone.get_end_bone(i)
+		var ms = MeshInstance3D.new()
+		ms.mesh = SphereMesh.new()
+		ms.mesh.radius = 
 		for j in range(springbone.get_joint_count(i)):
-			print(j, " ", springbone.get_joint_radius(i, j))
+			print(j, " ", springbone.get_joint_bone_name(i, j))
+		
 
 func _process(_delta):
 	for i in range(len(boneattachments)):
