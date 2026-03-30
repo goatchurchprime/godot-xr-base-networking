@@ -425,6 +425,7 @@ tracker = &"left_hand"
 [node name="LeftHand" parent="XROrigin3D/XRController3D_left" unique_id=1954624197 instance=ExtResource("3_1bvp3")]
 
 [node name="MovementDirect" parent="XROrigin3D/XRController3D_left" unique_id=264777544 instance=ExtResource("4_4c57u")]
+max_speed = 2.0
 strafe = true
 
 [node name="XRController3D_right" type="XRController3D" parent="XROrigin3D" unique_id=2092080945]
@@ -469,8 +470,10 @@ environment = SubResource("Environment_1bvp3")
 [node name="NetworkGatewayViewport" parent="." unique_id=1130742234 instance=ExtResource("11_dg77c")]
 transform = Transform3D(0.8685104, 0, -0.4956709, 0, 1, 0, 0.4956709, 0, 0.8685104, -3.4790926, 0.9929738, -3.2379038)
 viewport_size = Vector2(650, 400)
+transparent = 1
+scene_properties_keys = PackedStringArray()
 
-[node name="Viewport" parent="NetworkGatewayViewport" index="0" unique_id=1967651754]
+[node name="Viewport" parent="NetworkGatewayViewport" index="0"]
 size = Vector2i(650, 400)
 
 [node name="NetworkGateway" parent="NetworkGatewayViewport/Viewport" index="0" unique_id=407170005 instance=ExtResource("12_ycdy4")]
@@ -480,14 +483,14 @@ localplayerscene = ""
 [node name="roomname" parent="NetworkGatewayViewport/Viewport/NetworkGateway/VBox/TabContainer/MQTTsignalling/VBox/HBoxM/HSplitContainer/Msettings/HBox" parent_id_path=PackedInt32Array(407170005, 804249689) index="1" unique_id=113252904]
 text = "lime"
 
-[node name="Screen" parent="NetworkGatewayViewport" index="1" unique_id=1829703966]
+[node name="Screen" parent="NetworkGatewayViewport" index="1"]
 mesh = SubResource("QuadMesh_82xsv")
 surface_material_override/0 = SubResource("StandardMaterial3D_ryguw")
 
-[node name="StaticBody3D" parent="NetworkGatewayViewport" index="2" unique_id=72373557]
+[node name="StaticBody3D" parent="NetworkGatewayViewport" index="2"]
 viewport_size = Vector2(650, 400)
 
-[node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0" unique_id=1100798892]
+[node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
 shape = SubResource("BoxShape3D_d13ii")
 
 [node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]

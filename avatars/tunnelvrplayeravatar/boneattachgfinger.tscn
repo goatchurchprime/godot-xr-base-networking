@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bbaqpr5iyh7x5"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_i2ttw"]
+radius = 1.0
+height = 2.0
 radial_segments = 16
 rings = 8
 

@@ -9,6 +9,7 @@ var springbonespheres : Array[SpringBoneCollisionSphere3D]
 func _ready():
 	var vrplayer = get_node("../PlayerAvatars").get_child(0)
 	skelprobes.append(vrplayer.get_node("hand_l/Armature/Skeleton3D"))
+	skelprobes.append(vrplayer.get_node("hand_r/Armature/Skeleton3D"))
 
 	for skelprobe in skelprobes:
 		for ba in skelprobe.get_children():
@@ -30,18 +31,19 @@ func _ready():
 		var bam = ba.get_child(0)
 		sb.radius = bam.mesh.radius * bam.scale.x
 
+	var sbvc = load("res://springbonevisible.tscn")
 	for i in range(springbone.get_setting_count()):
 		print(i)
 		print(springbone.get_root_bone_name(i))
 		print(springbone.get_end_bone_name(i))
 		print(springbone.get_radius(i))
-		var bv = BoneAttachment3D.new()
-		bv.bone_idx = springbone.get_end_bone(i)
-		var ms = MeshInstance3D.new()
-		ms.mesh = SphereMesh.new()
-		ms.mesh.radius = 
 		for j in range(springbone.get_joint_count(i)):
-			print(j, " ", springbone.get_joint_bone_name(i, j))
+			prints(j, springbone.get_joint_bone_name(i, j))
+			var sbv = sbvc.instantiate()
+			sbv.get_child(0).scale = Vector3.ONE*springbone.get_radius(i)
+			sbv.bone_idx = springbone.get_joint_bone(i, j)
+			springbone.get_parent().add_child(sbv)
+
 		
 
 func _process(_delta):

@@ -44,6 +44,9 @@ func _ready():
 			selectedtrackslookup[r] = i
 	print("selectedtrackslookup ", selectedtrackslookup)
 	
+	var bac = load("res://avatars/tunnelvrplayeravatar/boneattachgfinger.tscn")
+	#for bn in ["Index"]
+	
 var possibleusernames = ["Alice", "Beth", "Cath", "Dan", "Earl", "Fred", "George", "Harry", "Ivan", "John", "Kevin", "Larry", "Martin", "Oliver", "Peter", "Quentin", "Robert", "Samuel", "Thomas", "Ulrik", "Victor", "Wayne", "Xavier", "Youngs", "Zephir"]
 func PF_initlocalplayer():
 	randomize()

@@ -1,15 +1,17 @@
 [gd_scene format=3 uid="uid://oiblcuuvss8y"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_i2ttw"]
+radius = 1.0
+height = 2.0
 radial_segments = 16
 rings = 8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t5veb"]
 transparency = 1
-albedo_color = Color(0.02745098, 1, 1, 0.30588236)
+albedo_color = Color(0.8678261, 0.91946423, 0.48921573, 0.30588236)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" unique_id=1218772559]
-transform = Transform3D(0.96752554, 0.25232607, -0.015030187, -0.015030141, 0.1167842, 0.9930434, 0.25232598, -0.96056914, 0.11678411, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9999998, 0, 0, 0)
 bone_name = "Index_Tip_L"
 bone_idx = 9
 

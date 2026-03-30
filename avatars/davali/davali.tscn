@@ -21,37 +21,42 @@ albedo_texture = ExtResource("2_ri2o2")
 
 [node name="davali" unique_id=1742228799 instance=ExtResource("1_qm27a")]
 
-[node name="Body" parent="Armature/Skeleton3D" parent_id_path=PackedInt32Array(1735986632) index="0" unique_id=1692176171]
+[node name="Body" parent="Armature/Skeleton3D" parent_id_path=PackedInt32Array(1602751686) index="0" unique_id=1477455552]
 surface_material_override/0 = SubResource("StandardMaterial3D_budmv")
 surface_material_override/1 = SubResource("StandardMaterial3D_4tj70")
 surface_material_override/2 = SubResource("StandardMaterial3D_p7p11")
 surface_material_override/3 = SubResource("StandardMaterial3D_gu651")
 
-[node name="SpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Armature/Skeleton3D" parent_id_path=PackedInt32Array(1735986632) index="1" unique_id=1959240675]
+[node name="SpringBoneSimulator3D" type="SpringBoneSimulator3D" parent="Armature/Skeleton3D" parent_id_path=PackedInt32Array(1602751686) index="1" unique_id=1959240675]
 setting_count = 6
 settings/0/root_bone_name = "UpperEars_L"
 settings/0/root_bone = 9
 settings/0/end_bone_name = "UpperEarsEnd_L"
 settings/0/end_bone = 11
-settings/0/extend_end_bone = false
+settings/0/extend_end_bone = true
+settings/0/end_bone/direction = 6
+settings/0/end_bone/length = 0.067
 settings/0/center_from = 0
-settings/0/individual_config = false
-settings/0/rotation_axis = 3
-settings/0/radius/value = 0.04
-settings/0/radius/damping_curve = null
-settings/0/stiffness/value = 1.0
-settings/0/stiffness/damping_curve = null
-settings/0/drag/value = 0.4
-settings/0/drag/damping_curve = null
-settings/0/gravity/value = 0.0
-settings/0/gravity/damping_curve = null
-settings/0/gravity/direction = Vector3(0, -1, 0)
-settings/0/joints/0/bone_name = "UpperEars_L"
-settings/0/joints/0/bone = 9
-settings/0/joints/1/bone_name = "UpperEarsMid_L"
-settings/0/joints/1/bone = 10
-settings/0/joints/2/bone_name = "UpperEarsEnd_L"
-settings/0/joints/2/bone = 11
+settings/0/individual_config = true
+settings/0/joint_count = 3
+settings/0/joints/0/rotation_axis = 3
+settings/0/joints/0/radius = 0.028
+settings/0/joints/0/stiffness = 1.0
+settings/0/joints/0/drag = 0.4
+settings/0/joints/0/gravity = 0.0
+settings/0/joints/0/gravity_direction = Vector3(0, -1, 0)
+settings/0/joints/1/rotation_axis = 3
+settings/0/joints/1/radius = 0.035
+settings/0/joints/1/stiffness = 1.0
+settings/0/joints/1/drag = 0.4
+settings/0/joints/1/gravity = 0.0
+settings/0/joints/1/gravity_direction = Vector3(0, -1, 0)
+settings/0/joints/2/rotation_axis = 3
+settings/0/joints/2/radius = 0.015
+settings/0/joints/2/stiffness = 1.0
+settings/0/joints/2/drag = 0.4
+settings/0/joints/2/gravity = 0.0
+settings/0/joints/2/gravity_direction = Vector3(0, -1, 0)
 settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 settings/1/root_bone_name = ""
@@ -70,8 +75,8 @@ settings/1/drag/damping_curve = null
 settings/1/gravity/value = 0.0
 settings/1/gravity/damping_curve = null
 settings/1/gravity/direction = Vector3(0, -1, 0)
-settings/1/enable_all_child_collisions = true
-settings/1/exclude_collision_count = 0
+settings/1/enable_all_child_collisions = false
+settings/1/collision_count = 0
 settings/2/root_bone_name = "UpperEars_R"
 settings/2/root_bone = 6
 settings/2/end_bone_name = "UpperEarsEnd_R"
@@ -151,7 +156,9 @@ settings/5/root_bone_name = "Root_Tail"
 settings/5/root_bone = 71
 settings/5/end_bone_name = "Root_Tail_007"
 settings/5/end_bone = 78
-settings/5/extend_end_bone = false
+settings/5/extend_end_bone = true
+settings/5/end_bone/direction = 6
+settings/5/end_bone/length = 0.132
 settings/5/center_from = 0
 settings/5/individual_config = false
 settings/5/rotation_axis = 3
