@@ -4,6 +4,11 @@ func _on_start_xr_xr_failed_to_initialize():
 	$XROrigin3D/XRSimulator.enabled = true
 	#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
+
+func _ready():
+	await get_tree().create_timer(0.5).timeout
+	$NetworkGatewayViewport/Viewport/NetworkGateway.simple_webrtc_connect("lylylyl")
+
 var fadetween = null
 func Dset_fade(p_value : float):
 	XRToolsFade.set_fade("spawnpoint", Color(0.3, 0, 0, p_value))

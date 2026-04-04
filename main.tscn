@@ -98,7 +98,7 @@ material = SubResource("StandardMaterial3D_1bvp3")
 size = Vector3(50, 1, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
-size = Vector3(10, 1, 10)
+size = Vector3(50, 1, 50)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vivmo"]
 
@@ -537,6 +537,7 @@ tracker = &"right_hand"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
 
 [node name="MovementJump" parent="XROrigin3D/XRController3D_right" unique_id=1805752777 instance=ExtResource("9_2cqfq")]
+jump_button_action = "ax_button"
 
 [node name="RightHand" parent="XROrigin3D/XRController3D_right" unique_id=267193779 instance=ExtResource("11_getpj")]
 
@@ -579,6 +580,7 @@ visible = true
 enabled = false
 
 [node name="PlayerBody" parent="XROrigin3D" unique_id=337536217 instance=ExtResource("9_ycdy4")]
+player_calibrate_height = false
 physics = SubResource("Resource_getpj")
 
 [node name="World" type="Node3D" parent="." unique_id=1711002190]
