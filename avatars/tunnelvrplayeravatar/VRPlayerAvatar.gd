@@ -31,7 +31,7 @@ static var selectedtrackslookup = {
 func _ready():
 	chandl = LeftHandController.get_node("LeftHand/Hand_Glove_L")
 	chandlskel = chandl.find_child("Skeleton3D")
-	chandr = RightHandController.get_node("simplerighthand")
+	chandr = RightHandController.get_node("RightHand/Hand_Glove_low_R")
 	chandrskel = chandr.find_child("Skeleton3D")
 
 	var anim : Animation = $PlayerAnimation.get_animation("playeral/trackstemplate")

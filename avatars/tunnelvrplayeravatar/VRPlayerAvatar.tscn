@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cj85ykry5pr77" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://bbaqpr5iyh7x5" path="res://avatars/tunnelvrplayeravatar/boneattachgfinger.tscn" id="3_c0lny"]
-[ext_resource type="PackedScene" uid="uid://dngec4nbh3ngj" path="res://addons/xr-autohandtracker/simplerighthand.glb" id="4_c7mpy"]
 [ext_resource type="PackedScene" uid="uid://dhaqth6q5yw4n" path="res://addons/godot-xr-tools/hands/model/hand_l.gltf" id="7_s2tnc"]
 [ext_resource type="PackedScene" uid="uid://ds1t8vc0kxoeo" path="res://addons/godot-xr-tools/hands/model/hand_r.gltf" id="9_v8raj"]
 
@@ -407,8 +406,6 @@ bone_idx = 14
 [node name="MeshInstance3D" parent="hand_l/Armature/Skeleton3D/BoneAttachment3D2" index="0" unique_id=1088624536]
 transform = Transform3D(0.01, 2.3283062e-10, 3.3881313e-19, -2.3283062e-10, 0.01, 1.4551915e-11, 0, -1.4551915e-11, 0.01, -0.0033248365, -0.00066778064, -5.066395e-06)
 
-[node name="simplerighthand" parent="." unique_id=903037897 instance=ExtResource("4_c7mpy")]
-
 [node name="hand_r" parent="." unique_id=628636793 instance=ExtResource("9_v8raj")]
 
 [node name="BoneAttachment3D" parent="hand_r/Armature/Skeleton3D" parent_id_path=PackedInt32Array(628636793, 2044004441) index="1" unique_id=946397415 instance=ExtResource("3_c0lny")]
@@ -481,7 +478,6 @@ libraries/playeral = SubResource("AnimationLibrary_qatlg")
 [editable path="hand_l"]
 [editable path="hand_l/Armature/Skeleton3D/BoneAttachment3D"]
 [editable path="hand_l/Armature/Skeleton3D/BoneAttachment3D2"]
-[editable path="simplerighthand"]
 [editable path="hand_r"]
 [editable path="hand_r/Armature/Skeleton3D/BoneAttachment3D"]
 [editable path="hand_r/Armature/Skeleton3D/BoneAttachment3D2"]
