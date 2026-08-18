@@ -122,7 +122,7 @@ cull_mode = 2
 albedo_texture = SubResource("ViewportTexture_4k2k6")
 texture_filter = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ok6jj"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_4k2k6"]
 resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
 
@@ -461,7 +461,7 @@ tracks/45/interp = 1
 tracks/45/loop_wrap = true
 tracks/45/keys = PackedFloat32Array()
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_facbu"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0rl1p"]
 resource_local_to_scene = true
 _data = {
 &"trackstemplate": SubResource("Animation_1xqwv")
@@ -606,8 +606,6 @@ environment = SubResource("Environment_1bvp3")
 [node name="NetworkGatewayViewport" parent="." unique_id=1130742234 instance=ExtResource("11_dg77c")]
 transform = Transform3D(0.8685104, 0, -0.4956709, 0, 1, 0, 0.4956709, 0, 0.8685104, -3.4790926, 0.9929738, -3.2379038)
 viewport_size = Vector2(650, 400)
-transparent = 1
-scene_properties_keys = PackedStringArray()
 
 [node name="Viewport" parent="NetworkGatewayViewport" index="0"]
 size = Vector2i(650, 400)
@@ -627,7 +625,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_0rl1p")
 viewport_size = Vector2(650, 400)
 
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
-shape = SubResource("BoxShape3D_ok6jj")
+shape = SubResource("BoxShape3D_4k2k6")
 
 [node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
 
@@ -650,7 +648,7 @@ transform = Transform3D(0.010000002, 0, -2.910383e-11, -4.656613e-10, 0.01000000
 transform = Transform3D(0.01, 0, -5.820766e-11, -2.3283064e-10, 0.01, 1.1641532e-10, 0, 0, 0.01, -0.0055748224, -0.010951459, 0.0026866198)
 
 [node name="PlayerAnimation" parent="PlayerAvatars/VRPlayerAvatar" index="3" unique_id=470521]
-libraries/playeral = SubResource("AnimationLibrary_facbu")
+libraries/playeral = SubResource("AnimationLibrary_0rl1p")
 
 [node name="PlayerFrame" parent="PlayerAvatars/VRPlayerAvatar" unique_id=967951852 instance=ExtResource("14_w48qg")]
 
@@ -661,7 +659,61 @@ script = ExtResource("18_cegan")
 transform = Transform3D(-0.994228, 0, 0.10728785, 0, 1, 0, -0.10728785, 0, -0.994228, -0.0074774027, 0.8992535, -0.93399245)
 
 [node name="SpringBoneSimulator3D" parent="HeadPatNode/davali/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1742228799, 1602751686) index="1" unique_id=1959240675]
-settings/5/radius/value = 0.03
+settings/0/joints/0/radius = 0.02
+settings/5/individual_config = true
+settings/5/joint_count = 8
+settings/5/joints/0/rotation_axis = 3
+settings/5/joints/0/radius = 0.03
+settings/5/joints/0/stiffness = 1.0
+settings/5/joints/0/drag = 0.4
+settings/5/joints/0/gravity = 0.0
+settings/5/joints/0/gravity_direction = Vector3(0, -1, 0)
+settings/5/joints/1/rotation_axis = 3
+settings/5/joints/1/radius = 0.02
+settings/5/joints/1/stiffness = 1.0
+settings/5/joints/1/drag = 0.4
+settings/5/joints/1/gravity = 0.0
+settings/5/joints/1/gravity_direction = Vector3(0, -1, 0)
+settings/5/joints/2/rotation_axis = 3
+settings/5/joints/2/radius = 0.015
+settings/5/joints/2/stiffness = 1.0
+settings/5/joints/2/drag = 0.4
+settings/5/joints/2/gravity = 0.0
+settings/5/joints/2/gravity_direction = Vector3(0, -1, 0)
+settings/5/joints/3/rotation_axis = 3
+settings/5/joints/3/radius = 0.02
+settings/5/joints/3/stiffness = 1.0
+settings/5/joints/3/drag = 0.4
+settings/5/joints/3/gravity = 0.0
+settings/5/joints/3/gravity_direction = Vector3(0, -1, 0)
+settings/5/joints/4/rotation_axis = 3
+settings/5/joints/4/radius = 0.03
+settings/5/joints/4/stiffness = 1.0
+settings/5/joints/4/drag = 0.4
+settings/5/joints/4/gravity = 0.0
+settings/5/joints/4/gravity_direction = Vector3(0, -1, 0)
+settings/5/joints/5/rotation_axis = 3
+settings/5/joints/5/radius = 0.04
+settings/5/joints/5/stiffness = 1.0
+settings/5/joints/5/drag = 0.4
+settings/5/joints/5/gravity = 0.0
+settings/5/joints/5/gravity_direction = Vector3(0, -1, 0)
+settings/5/joints/6/rotation_axis = 3
+settings/5/joints/6/radius = 0.05
+settings/5/joints/6/stiffness = 1.0
+settings/5/joints/6/drag = 0.4
+settings/5/joints/6/gravity = 0.0
+settings/5/joints/6/gravity_direction = Vector3(0, -1, 0)
+settings/5/joints/7/rotation_axis = 3
+settings/5/joints/7/radius = 0.03
+settings/5/joints/7/stiffness = 1.0
+settings/5/joints/7/drag = 0.4
+settings/5/joints/7/gravity = 0.0
+settings/5/joints/7/gravity_direction = Vector3(0, -1, 0)
+
+[node name="SpringBoneCollisionSphere3D" parent="HeadPatNode/davali/Armature/Skeleton3D/SpringBoneSimulator3D" index="0" unique_id=962582324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03535536, 0.5944282, -0.42326576)
+collide_mode = 2
 
 [connection signal="xr_failed_to_initialize" from="XROrigin3D/StartXR" to="." method="_on_start_xr_xr_failed_to_initialize"]
 

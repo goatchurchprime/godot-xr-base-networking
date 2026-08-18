@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://oiblcuuvss8y"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_i2ttw"]
+resource_local_to_scene = true
 radius = 1.0
 height = 2.0
 radial_segments = 16

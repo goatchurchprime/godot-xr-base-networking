@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Godot XR Base Networking"
 run/main_scene="uid://ksq0mmbfkp5m"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.8", "Forward Plus")
 config/icon="res://icon.svg"
 
 [audio]
@@ -21,8 +21,8 @@ driver/enable_input=true
 
 [autoload]
 
-XRToolsUserSettings="*uid://bqgb8i74tm0t"
-XRToolsRumbleManager="*uid://by853dk86g1qw"
+XRToolsUserSettings="*res://addons/godot-xr-tools/user_settings/user_settings.gd"
+XRToolsRumbleManager="*res://addons/godot-xr-tools/rumble/rumble_manager.gd"
 
 [editor_plugins]
 
