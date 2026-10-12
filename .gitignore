@@ -1,3 +1,20 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Development-time composition links.
+/worlds
+/components
+/Shaders
+/editor_lab
+/reference_tiles
+/bin
+/addons/cesium_godot
+/addons/godot_potree
+/addons/survex
+/addons/godot-xr-tools
+/addons/xr-simulator
+/addons/mqtt
+/addons/webrtc
+/addons/player-networking
+/addons/twovoip

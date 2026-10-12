@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://main.tscn" id="1_network_shell"]
+[ext_resource type="PackedScene" path="res://worlds/cave_cesium/cave_cesium_world.tscn" id="2_world"]
+
+[node name="Main" instance=ExtResource("1_network_shell")]
+
+[node name="CaveCesiumWorld" parent="World" instance=ExtResource("2_world")]
