@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://World/cave_survey_component.gd" id="1_component"]
+[ext_resource type="Script" path="res://addons/survex/survex_layer.gd" id="2_layer"]
+
+[node name="CaveSurveyComponent" type="Node3D"]
+script = ExtResource("1_component")
+
+[node name="SurvexLayer" type="Node3D" parent="."]
+script = ExtResource("2_layer")

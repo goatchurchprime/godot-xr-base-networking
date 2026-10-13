@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://World/world_frame.gd" id="1_frame"]
+[ext_resource type="PackedScene" path="res://World/quest_cave_environment.tscn" id="2_environment"]
+[ext_resource type="PackedScene" path="res://World/cave_survey_component.tscn" id="3_survey"]
+
+[node name="CaveLocalWorld" type="Node3D"]
+script = ExtResource("1_frame")
+world_id = "austria-204-upper-b-offline"
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="CaveEnvironment" parent="Environment" instance=ExtResource("2_environment")]
+
+[node name="Geospatial" type="Node3D" parent="."]
+
+[node name="Survey" type="Node3D" parent="."]
+
+[node name="CaveSurvey" parent="Survey" instance=ExtResource("3_survey")]
+default_data_path = "res://World/survey_data/204allupperB_cave_subset.survex.json"
+
+[node name="PointClouds" type="Node3D" parent="."]
+
+[node name="SharedPlaces" type="Node3D" parent="."]
+
+[node name="Avatars" type="Node3D" parent="."]
+
+[node name="PhysicsDomain" type="Node3D" parent="."]
+
+[node name="Debug" type="Node3D" parent="."]

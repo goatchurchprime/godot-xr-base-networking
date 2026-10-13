@@ -1,8 +1,14 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="PackedScene" path="res://main.tscn" id="1_network_shell"]
-[ext_resource type="PackedScene" path="res://worlds/cave_cesium/cave_cesium_world.tscn" id="2_world"]
+[ext_resource type="PackedScene" path="res://Runtime/NetworkedRuntime.tscn" id="1_network_shell"]
+[ext_resource type="PackedScene" path="res://World/WorldFrame.tscn" id="2_world"]
 
 [node name="Main" instance=ExtResource("1_network_shell")]
 
-[node name="CaveCesiumWorld" parent="World" instance=ExtResource("2_world")]
+[node name="WorldFrame" parent="World" instance=ExtResource("2_world")]
+player_root_path = NodePath("../../XROrigin3D")
+camera_path = NodePath("../../XROrigin3D/XRCamera3D")
+xr_origin_path = NodePath("../../XROrigin3D")
+left_controller_path = NodePath("../../XROrigin3D/XRController3D_left")
+right_controller_path = NodePath("../../XROrigin3D/XRController3D_right")
+host_manages_locomotion = true

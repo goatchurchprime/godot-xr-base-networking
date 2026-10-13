@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://nafreofhjkj5"]
+
+[ext_resource type="Shader" uid="uid://d4mpluhfndi53" path="res://addons/cesium_godot/visuals/atmosphere.gdshader" id="1_wxxwd"]
+
+[resource]
+render_priority = -1
+shader = ExtResource("1_wxxwd")

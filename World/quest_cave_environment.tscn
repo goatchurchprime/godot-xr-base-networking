@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Material" path="res://addons/survex/cave_sky.tres" id="1_sky"]
+
+[sub_resource type="Sky" id="Sky_cave"]
+sky_material = ExtResource("1_sky")
+
+[sub_resource type="Environment" id="Environment_cave"]
+background_mode = 2
+sky = SubResource("Sky_cave")
+ambient_light_source = 3
+ambient_light_energy = 0.55
+
+[node name="CaveEnvironment" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cave")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-1.134464, -0.610865, 0)
+light_energy = 2.0
+shadow_enabled = false

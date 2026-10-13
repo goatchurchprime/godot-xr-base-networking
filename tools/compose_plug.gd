@@ -8,14 +8,22 @@ extends SceneTree
 ## committed. Use `status strict` in CI when the declared commit must match.
 
 var _peers: Array[Dictionary] = []
+var _profile := "base"
 
 
-func peer(name: String, local_path: String, expected_commit: String, mounts: Array) -> void:
+func peer(
+	name: String,
+	local_path: String,
+	expected_commit: String,
+	mounts: Array,
+	profiles: Array[String] = ["base"]
+) -> void:
 	_peers.append({
 		"name": name,
 		"local_path": local_path,
 		"expected_commit": expected_commit,
 		"mounts": mounts,
+		"profiles": profiles,
 	})
 
 
@@ -36,6 +44,10 @@ func _initialize() -> void:
 			action = candidate
 			break
 	var strict := "strict" in arguments
+	for candidate in ["base", "networked"]:
+		if candidate in arguments:
+			_profile = candidate
+			break
 	var result := 0
 	match action:
 		"status":
@@ -51,6 +63,8 @@ func _status(strict: bool) -> int:
 	var failures := 0
 	print("Godot compose status for ", ProjectSettings.globalize_path("res://"))
 	for definition in _peers:
+		if not _peer_enabled(definition):
+			continue
 		var source_root := _absolute_from_project(definition.local_path)
 		var revision := _git_revision(source_root)
 		var expected: String = definition.expected_commit
@@ -77,6 +91,8 @@ func _link_all(strict: bool) -> int:
 		print("Strict revision checks failed; no links were changed.")
 		return failures
 	for definition in _peers:
+		if not _peer_enabled(definition):
+			continue
 		var source_root := _absolute_from_project(definition.local_path)
 		if _git_revision(source_root).is_empty():
 			push_error("Peer repository is unavailable: " + source_root)
@@ -106,6 +122,8 @@ func _link_all(strict: bool) -> int:
 func _unlink_all() -> int:
 	var failures := 0
 	for definition in _peers:
+		if not _peer_enabled(definition):
+			continue
 		var source_root := _absolute_from_project(definition.local_path)
 		for mapping in definition.mounts:
 			var source := source_root.path_join(mapping.source).simplify_path()
@@ -122,6 +140,11 @@ func _unlink_all() -> int:
 			else:
 				print("Unlinked ", mapping.target)
 	return failures
+
+
+func _peer_enabled(definition: Dictionary) -> bool:
+	var profiles: Array = definition.profiles
+	return "base" in profiles or _profile in profiles
 
 
 func _absolute_from_project(path: String) -> String:

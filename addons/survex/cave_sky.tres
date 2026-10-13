@@ -1,0 +1,20 @@
+[gd_resource type="ProceduralSkyMaterial" format=3 uid="uid://ndi0qbsg0v4h"]
+
+[sub_resource type="Gradient" id="Gradient_cloud_cover"]
+offsets = PackedFloat32Array(0, 0.53900707, 0.9787234)
+colors = PackedColorArray(0, 0, 0, 1, 0.108486064, 0.47704852, 0.59326476, 1, 0.23753911, 0.23753914, 0.23753911, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoise_cloud_cover"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_cloud_cover"]
+noise = SubResource("FastNoise_cloud_cover")
+color_ramp = SubResource("Gradient_cloud_cover")
+seamless = true
+bump_strength = 9.2
+
+[resource]
+sky_top_color = Color(0.17948964, 0.21833497, 0.27875835, 1)
+sky_curve = 0.08919062
+sky_cover = SubResource("NoiseTexture_cloud_cover")
+ground_horizon_color = Color(0.6431373, 0.7882353, 0.8, 1)
+ground_curve = 0.025491273

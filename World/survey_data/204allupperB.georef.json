@@ -1,0 +1,13 @@
+{
+  "source": "204allupperB.tiff",
+  "crs": "EPSG:32633",
+  "west": 411170.0,
+  "east": 411653.0,
+  "south": 5282121.0,
+  "north": 5282947.0,
+  "width_pixels": 7599,
+  "height_pixels": 13005,
+  "preview": "204allupperB_preview.png",
+  "preview_scale": 0.5,
+  "drawing_altitude_metres": 1100.0
+}

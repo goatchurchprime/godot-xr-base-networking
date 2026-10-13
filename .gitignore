@@ -2,16 +2,7 @@
 .godot/
 /android/
 
-# Development-time composition links.
-/worlds
-/components
-/Shaders
-/editor_lab
-/reference_tiles
-/bin
-/addons/cesium_godot
-/addons/godot_potree
-/addons/survex
+# Development-time addon links.
 /addons/godot-xr-tools
 /addons/xr-simulator
 /addons/mqtt

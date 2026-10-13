@@ -1,26 +1,10 @@
 @tool
 extends "res://tools/compose_plug.gd"
 
-# The assembly owns only MainNetworking and application configuration. World
-# content and actively developed networking layers remain in their own repos.
+# `base` is enough for MainSolo. `networked` includes the base peers plus the
+# wider networking stack required by MainNetworking.
 
 func _plugging() -> void:
-	peer(
-		"TunnelXR_World",
-		"../TunnelXR_World",
-		"ee889c0546270ce07520a18acedf31d8618d29a9",
-		[
-			mount("worlds", "worlds"),
-			mount("components", "components"),
-			mount("Shaders", "Shaders"),
-			mount("editor_lab", "editor_lab"),
-			mount("reference_tiles", "reference_tiles"),
-			mount("bin", "bin"),
-			mount("addons/cesium_godot", "addons/cesium_godot"),
-			mount("addons/godot_potree", "addons/godot_potree"),
-			mount("addons/survex", "addons/survex"),
-		],
-	)
 	peer(
 		"godot-xr-tools",
 		"../godot-xr-base-networking/.plugged/godot-xr-tools",
@@ -38,22 +22,26 @@ func _plugging() -> void:
 		"../godot-mqtt",
 		"21e94568bd80a84b59f7b9e485e581736eacfe59",
 		[mount("addons/mqtt", "addons/mqtt")],
+		["networked"],
 	)
 	peer(
 		"godot-webrtc-addon",
 		"../godot-xr-base-networking/.plugged/godot-webrtc-addon",
 		"8876c71e929ac2b193a2f4840fd81caf5fc0c1f7",
 		[mount("addons/webrtc", "addons/webrtc")],
+		["networked"],
 	)
 	peer(
 		"player-networking",
 		"../godot_multiplayer_networking_workbench",
 		"37a243513697d090d46b453989ab1fa9281a6bc5",
 		[mount("addons/player-networking", "addons/player-networking")],
+		["networked"],
 	)
 	peer(
 		"TwoVoIP",
 		"../two-voip-godot-4",
-		"7b5d7516a50caa30f2cff21f6b1bb6087a10835d",
+		"620771ae06fb099b0eeae4cd2598fe6c8b8e30de",
 		[mount("addons/twovoip", "addons/twovoip")],
+		["networked"],
 	)
