@@ -13,8 +13,8 @@ func _plugging() -> void:
 	)
 	peer(
 		"godot-xr-tools",
-		"../godot-xr-base-networking/.plugged/godot-xr-tools",
-		"d28eeb9e031b2296f464db8b865a4fbebf2dc444",
+		"../godot-xr-tools",
+		"42c0c060ed71161e323c3dab7fa6f581f8a260d5",
 		[mount("addons/godot-xr-tools", "addons/godot-xr-tools")],
 	)
 	peer(
