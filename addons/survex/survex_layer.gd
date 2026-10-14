@@ -184,6 +184,13 @@ func get_local_bounds() -> AABB:
 
 
 func get_focus_bounds(lower_percentile := 0.05, upper_percentile := 0.95) -> AABB:
+	# Passage tubes are deliberately generated from a smaller, useful working
+	# area than the full federated centreline. Prefer their extent for the
+	# opening view so remote surface/control stations do not make the cave tiny.
+	var passage_bounds := _get_passage_bounds()
+	if passage_bounds.size.length_squared() > 0.0:
+		return passage_bounds
+
 	# Very large federated cave projects often contain remote boundary and
 	# surface stations. Use robust bounds for the opening camera without hiding
 	# or discarding any of those stations from the actual layer.
@@ -208,6 +215,30 @@ func get_focus_bounds(lower_percentile := 0.05, upper_percentile := 0.95) -> AAB
 	var minimum := Vector3(xs[lower], ys[lower], zs[lower])
 	var maximum := Vector3(xs[upper], ys[upper], zs[upper])
 	return AABB(minimum, maximum - minimum)
+
+
+func _get_passage_bounds() -> AABB:
+	var found := false
+	var bounds := AABB()
+	for tube in tubes:
+		if typeof(tube) != TYPE_DICTIONARY:
+			continue
+		var cross_sections = tube.get("cross_sections", [])
+		if typeof(cross_sections) != TYPE_ARRAY:
+			continue
+		for cross_section in cross_sections:
+			if typeof(cross_section) != TYPE_DICTIONARY:
+				continue
+			var position_value = cross_section.get("position", [])
+			if typeof(position_value) != TYPE_ARRAY or position_value.size() != 3:
+				continue
+			var position := _vec3(position_value)
+			if found:
+				bounds = bounds.expand(position)
+			else:
+				bounds = AABB(position, Vector3.ZERO)
+				found = true
+	return bounds
 
 
 func _apply_registration(registration: Variant, cesium_georeference: Node) -> String:

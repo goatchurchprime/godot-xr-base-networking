@@ -25,24 +25,26 @@ const LOCAL_TERRAIN_CLIP_RECT := Rect2(-2243.0, -2037.0, 4152.0, 4165.0)
 const LOCAL_TERRAIN_CLIP_MAX_TILE_DIAGONAL := 8000.0
 const XR_VERTICAL_DEAD_ZONE := 0.72
 
-## The WorldFrame owns the geospatial presentation, not the player. Assembly
-## scenes inject their player rig through these relative paths. An empty camera
-## path selects the small built-in solo desktop/OpenXR bridge.
+## The WorldFrame owns the geospatial presentation, not the player. This path
+## is only the mounting point used by the standalone non-XR world scene.
 @export_node_path("Node3D") var player_root_path := NodePath("PlayerSocket")
-@export_node_path("Camera3D") var camera_path := NodePath()
-@export_node_path("XROrigin3D") var xr_origin_path := NodePath()
-@export_node_path("XRController3D") var left_controller_path := NodePath()
-@export_node_path("XRController3D") var right_controller_path := NodePath()
 @export var host_manages_locomotion := false
+## Cesium is optional far-distance context. Keep it off until explicitly
+## enabled so local cave and terrain layers never start network streaming by
+## merely entering the shared WorldFrame scene.
+@export var cesium_enabled := false
+@export var local_height_terrain_enabled := true
+@export_dir var local_height_terrain_data := "res://World/terrain/styria_1m"
 
 @onready var status_label: Label = $Interface/Panel/Status
 @onready var world_frame: WorldFrame3D = $Frame
 @onready var geospatial_root: Node3D = $Frame/Geospatial
+@onready var terrain_root: Node3D = $Frame/Terrain
 @onready var survey_root: Node3D = $Frame/Survey
 @onready var cave_component: CaveSurveyComponent = $Frame/Survey/CaveSurvey
 @onready var point_cloud_root: Node3D = $Frame/PointClouds
 @onready var world_debug_root: Node3D = $Frame/Debug
-@onready var local_player_root: Node3D = get_node(player_root_path)
+@onready var local_player_root: Node3D = get_node_or_null(player_root_path) as Node3D
 @onready var world_environment: WorldEnvironment = $Frame/Environment/CaveEnvironment/WorldEnvironment
 @onready var sun: DirectionalLight3D = $Frame/Environment/CaveEnvironment/Sun
 @onready var sun_direction_controller: SunDirectionController = $ApplicationSystems/SunDirectionController
@@ -51,6 +53,7 @@ var globe: CesiumGeoreference
 var tileset: Cesium3DTileset
 var local_terrain_tileset: Cesium3DTileset
 var local_terrain_material: ShaderMaterial
+var local_height_terrain: HTerrain
 var local_terrain_uses_aerial_imagery := false
 var world_terrain_enabled := true
 var buildings_tileset: Cesium3DTileset
@@ -83,9 +86,61 @@ var startup_survex_data: Dictionary = {}
 
 
 func _ready() -> void:
-	# CesiumGDConfig creates its singleton node on first access. Defer setup so
-	# the scene root is no longer in its child-initialisation phase.
-	_initialize_cesium.call_deferred()
+	# CesiumGDConfig creates its singleton node on first access. Defer either
+	# path so the scene root is no longer in its child-initialisation phase.
+	if cesium_enabled or OS.get_environment("TUNNELXR_ENABLE_CESIUM") == "1":
+		_initialize_cesium.call_deferred()
+	else:
+		_initialize_local_world.call_deferred()
+
+
+func _initialize_local_world() -> void:
+	startup_survex_path = find_survex_layer_file()
+	xr_mode = OS.has_feature("steam_frame") or OS.has_feature("android") or "--xr" in OS.get_cmdline_user_args()
+	if not bind_host_player():
+		if xr_mode:
+			setup_xr_camera()
+		else:
+			setup_local_desktop_camera()
+	setup_sun_controls()
+	setup_local_height_terrain()
+	setup_survex_layer(startup_survex_path)
+	status_label.text = "Local 1 m terrain and cave survey • Cesium off" if local_height_terrain != null else "Local cave survey • Cesium off"
+	print("TunnelXR local world ready; Cesium streaming is disabled")
+
+
+func setup_local_height_terrain() -> void:
+	if not local_height_terrain_enabled:
+		return
+	var metadata_path := local_height_terrain_data.path_join("data.hterrain")
+	var placement_path := local_height_terrain_data.path_join("placement.json")
+	if not FileAccess.file_exists(metadata_path) or not FileAccess.file_exists(placement_path):
+		push_warning("Local HTerrain data is unavailable: " + local_height_terrain_data)
+		return
+	var placement = JSON.parse_string(FileAccess.get_file_as_string(placement_path))
+	if typeof(placement) != TYPE_DICTIONARY:
+		push_warning("Local HTerrain placement is invalid: " + placement_path)
+		return
+	var position_value = placement.get("position_local", [])
+	if typeof(position_value) != TYPE_ARRAY or position_value.size() != 3:
+		push_warning("Local HTerrain placement has no position_local")
+		return
+
+	var terrain_data := HTerrainData.new()
+	terrain_data.load_data(local_height_terrain_data)
+	local_height_terrain = HTerrain.new()
+	local_height_terrain.name = "StyriaDGM1m"
+	local_height_terrain.set_collision_enabled(false)
+	local_height_terrain.set_cast_shadow(GeometryInstance3D.SHADOW_CASTING_SETTING_OFF)
+	local_height_terrain.set_custom_shader(load("res://World/shaders/hterrain_elevation_only.gdshader"))
+	local_height_terrain.set_shader_type(HTerrain.SHADER_CUSTOM)
+	local_height_terrain.lod_scale = 1.5 if xr_mode else 2.0
+	local_height_terrain.position = Vector3(
+		float(position_value[0]), float(position_value[1]), float(position_value[2])
+	)
+	terrain_root.add_child(local_height_terrain)
+	local_height_terrain.set_data(terrain_data)
+	print("Local HTerrain loaded: %s at %s" % [local_height_terrain_data, local_height_terrain.position])
 
 
 func _initialize_cesium() -> void:
@@ -329,7 +384,9 @@ func setup_survex_layer(path := "") -> void:
 		return
 	survex_layer = cave_component.layer
 	var error: String
-	if not startup_survex_data.is_empty() and path == startup_survex_path:
+	if globe == null:
+		error = cave_component.load_local_file(path)
+	elif not startup_survex_data.is_empty() and path == startup_survex_path:
 		error = cave_component.load_georeferenced_data(startup_survex_data, globe, path)
 		startup_survex_data = {}
 	else:
@@ -466,16 +523,16 @@ func setup_sun_controls() -> void:
 
 
 func bind_host_player() -> bool:
-	if camera_path.is_empty():
+	var xr_system := get_node_or_null("/root/Main/XRSystem")
+	if xr_system == null:
 		return false
-	camera = get_node_or_null(camera_path) as Camera3D
-	if camera == null:
-		push_error("WorldFrame camera_path does not resolve to a Camera3D: %s" % camera_path)
-		return false
-	xr_origin = get_node_or_null(xr_origin_path) as XROrigin3D
-	left_controller = get_node_or_null(left_controller_path) as XRController3D
-	right_controller = get_node_or_null(right_controller_path) as XRController3D
-	xr_mode = camera is XRCamera3D
+	# XRSystem owns its layout; the world only consumes its simple API.
+	local_player_root = xr_system.origin
+	xr_origin = xr_system.origin
+	camera = xr_system.camera
+	left_controller = xr_system.left_controller
+	right_controller = xr_system.right_controller
+	xr_mode = true
 	return true
 
 
@@ -576,6 +633,16 @@ func setup_desktop_camera() -> void:
 	local_player_root.add_child(camera)
 
 
+func setup_local_desktop_camera() -> void:
+	camera = Camera3D.new()
+	camera.name = "LocalWorldCamera"
+	camera.near = 0.1
+	camera.far = 30000.0
+	camera.fov = 60.0
+	camera.current = true
+	local_player_root.add_child(camera)
+
+
 func setup_xr_camera() -> void:
 	var interface := XRServer.find_interface("OpenXR")
 	if interface == null or (not interface.is_initialized() and not interface.initialize()):
@@ -618,7 +685,7 @@ func setup_xr_camera() -> void:
 
 
 func _process(delta: float) -> void:
-	if tileset == null or globe == null or camera == null:
+	if camera == null:
 		return
 	world_frame.update_view_context({
 		"frame_epoch": world_frame.frame_epoch,
@@ -632,7 +699,7 @@ func _process(delta: float) -> void:
 	# The stock desktop controller normally drives tile selection. Once a custom
 	# dataset frames the view we disable that controller, so both that view and
 	# XR must explicitly pass the current local East-Up-South camera to Cesium.
-	if xr_mode or view_framed:
+	if globe != null and tileset != null and (xr_mode or view_framed):
 		# Tile selection consumes real ECEF direction vectors. The plugin's
 		# get_tx_engine_to_ecef() only contains its fixed 90-degree rendering-axis
 		# conversion, not this origin's EUS tangent basis.
@@ -648,6 +715,10 @@ func _process(delta: float) -> void:
 	if not host_manages_locomotion:
 		update_xr_locomotion(delta)
 	update_survex_xr_interaction()
+	if view_framed:
+		update_fly_camera(delta)
+	if tileset == null or globe == null:
+		return
 	var first_mesh: MeshInstance3D = null
 	for child in tileset.get_children():
 		if child is MeshInstance3D:
@@ -677,8 +748,6 @@ func _process(delta: float) -> void:
 				status_label.text = "Terrain streaming • right-drag look • WASD + Q/E fly • Shift boost • +/- speed"
 			elif not xr_mode and first_mesh != null and startup_survex_path.is_empty():
 				frame_tile(first_mesh)
-	if view_framed:
-		update_fly_camera(delta)
 	if bake_started_msec >= 0:
 		bake_reference_when_ready()
 	if capture_started_msec >= 0:

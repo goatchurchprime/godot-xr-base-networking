@@ -6,6 +6,12 @@ extends "res://tools/compose_plug.gd"
 
 func _plugging() -> void:
 	peer(
+		"godot-heightmap-plugin",
+		"../godot_heightmap_plugin",
+		"7f574eb47fbd74cb1a79adc2cc9fb7f0694fccc3",
+		[mount("addons/zylann.hterrain", "addons/zylann.hterrain")],
+	)
+	peer(
 		"godot-xr-tools",
 		"../godot-xr-base-networking/.plugged/godot-xr-tools",
 		"d28eeb9e031b2296f464db8b865a4fbebf2dc444",

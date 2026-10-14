@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://x8efi7txoeft"]
+
+[ext_resource type="Script" uid="uid://dij0apb8oddpq" path="res://World/height_only_hterrain.gd" id="1_hterrain"]
+[ext_resource type="Resource" uid="uid://clxwedqkej23u" path="res://World/terrain/styria_1m/data.hterrain" id="2_data"]
+[ext_resource type="Shader" uid="uid://c82ekpsmfe6ds" path="res://World/shaders/hterrain_elevation_only.gdshader" id="3_shader"]
+[ext_resource type="Script" uid="uid://dwkifajvx0sag" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="4_u8baw"]
+
+[sub_resource type="Resource" id="Resource_pcmyi"]
+script = ExtResource("4_u8baw")
+mode = 0
+textures = [[], []]
+
+[sub_resource type="Environment" id="Environment_lab"]
+background_mode = 1
+background_color = Color(0.12, 0.16, 0.21, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.75, 0.82, 0.9, 1)
+ambient_light_energy = 0.25
+
+[node name="TerrainLightingLab" type="Node3D" unique_id=1149425057]
+
+[node name="Terrain" type="Node3D" parent="." unique_id=1967895590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2026, 0, -2216.5)
+script = ExtResource("1_hterrain")
+_terrain_data = ExtResource("2_data")
+chunk_size = 32
+collision_enabled = false
+collision_layer = 1
+collision_mask = 1
+physics_material = null
+shader_type = "Custom"
+custom_shader = ExtResource("3_shader")
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_pcmyi")
+render_layers = 1
+cast_shadow = 0
+shader_params/valley_color = Color(0.16, 0.2, 0.15, 1)
+shader_params/slope_colour_strength = 0.72
+shader_params/elevation_base_metres = -650.0
+shader_params/elevation_range_metres = 1500.0
+shader_params/hillshade_exponent = 1.0
+shader_params/direct_light_strength = 1.0
+shader_params/terrain_roughness = 0.96
+shader_params/terrain_specular = 0.05
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2133979998]
+environment = SubResource("Environment_lab")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1593063716]
+transform = Transform3D(0.81915206, 0.46984634, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 0, 0)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 3.0
+
+[node name="Camera" type="Camera3D" parent="." unique_id=1339330363]
+transform = Transform3D(0.901523, -0.192797, 0.387876, 0, 0.895476, 0.44511, -0.432731, -0.401277, 0.807291, 600, 850, 1250)
+current = true
+near = 0.5
+far = 10000.0

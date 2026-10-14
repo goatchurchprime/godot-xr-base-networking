@@ -1,6 +1,13 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+/.quest-godot-config/
+/.quest-godot-data/
+/exports/
+
+# Python tooling caches.
+__pycache__/
+*.py[cod]
 
 # Development-time addon links.
 /addons/godot-xr-tools
@@ -9,3 +16,5 @@
 /addons/webrtc
 /addons/player-networking
 /addons/twovoip
+/addons/zylann.hterrain
+/addons/godotopenxrvendors

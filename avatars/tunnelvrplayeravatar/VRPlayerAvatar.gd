@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var arvrorigin = XRHelpers.get_xr_origin(get_node("/root/Main/XROrigin3D"))
+@onready var arvrorigin = XRHelpers.get_xr_origin(get_node("/root/Main/XRSystem/XROrigin3D"))
 
 @onready var LeftHandController = XRHelpers.get_left_controller(arvrorigin)
 @onready var RightHandController = XRHelpers.get_right_controller(arvrorigin)

@@ -1,0 +1,21 @@
+{
+  "schema": "tunnelxr-hterrain-1",
+  "source": "/home/julian/audio_repositories/godot-cesium-preview/.local-terrain/source-dgm-1m.tif",
+  "source_crs": "EPSG:32633",
+  "attribution": "Land Steiermark / GIS Steiermark, ALS DGM 1 m, CC BY 4.0",
+  "resolution": 4097,
+  "metres_per_sample": 1.0,
+  "position_local": [
+    -2026.0,
+    0.0,
+    -2216.5
+  ],
+  "source_bounds": [
+    409385,
+    5280655,
+    413481.0,
+    5284751.0
+  ],
+  "height_min_local": -191.1199951171875,
+  "height_max_local": 494.989990234375
+}

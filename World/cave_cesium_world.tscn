@@ -15,6 +15,8 @@ coordinate_kind = 1
 
 [node name="Geospatial" type="Node3D" parent="."]
 
+[node name="Terrain" type="Node3D" parent="."]
+
 [node name="Survey" type="Node3D" parent="."]
 
 [node name="CaveSurvey" parent="Survey" instance=ExtResource("3_survey")]
