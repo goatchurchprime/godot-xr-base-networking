@@ -18,7 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="11_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="12_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="13_ycdy4"]
-[ext_resource type="PackedScene" uid="uid://djehrm378cbde" path="res://addons/player-networking/PlayerFrameLocal.tscn" id="14_w48qg"]
 [ext_resource type="Script" uid="uid://bj7f1vujr3yjk" path="res://Runtime/HandDebugMenu.gd" id="15_hand_menu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
@@ -106,6 +105,25 @@ enabled = false
 
 [node name="PlayerBody" parent="XRSystem/XROrigin3D" unique_id=337536217 instance=ExtResource("9_ycdy4")]
 
+[node name="MultiplayerSystem" type="Node3D" parent="." unique_id=469685545]
+
+[node name="Viewport" type="SubViewport" parent="MultiplayerSystem" unique_id=2127012317]
+size = Vector2i(650, 400)
+
+[node name="NetworkGateway" parent="MultiplayerSystem/Viewport" unique_id=407170005 instance=ExtResource("12_ycdy4")]
+offset_right = 692.0
+offset_bottom = 414.0
+playersnodepath = NodePath("../../PlayerAvatars")
+localplayerscene = ""
+
+[node name="roomname" parent="MultiplayerSystem/Viewport/NetworkGateway/VBox/TabContainer/MQTTsignalling/VBox/HBoxM/HSplitContainer/Msettings/HBox" parent_id_path=PackedInt32Array(407170005, 804249689) index="1" unique_id=113252904]
+text = "lime"
+
+[node name="PlayerAvatars" type="Node3D" parent="MultiplayerSystem" unique_id=1854644174]
+
+[node name="VRPlayerAvatar" parent="MultiplayerSystem/PlayerAvatars" unique_id=391835606 instance=ExtResource("13_ycdy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
+
 [node name="World" type="Node3D" parent="." unique_id=1711002190]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="World" unique_id=998891937]
@@ -134,17 +152,11 @@ toggle_button = &"menu_button"
 starts_open = false
 hand_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, -0.3)
 screen_size = Vector2(0.52, 0.32)
+viewport_path = NodePath("../MultiplayerSystem/Viewport")
 viewport_size = Vector2(676, 416)
 
 [node name="Viewport" parent="NetworkGatewayViewport" index="0"]
 size = Vector2i(650, 400)
-
-[node name="NetworkGateway" parent="NetworkGatewayViewport/Viewport" index="0" unique_id=407170005 instance=ExtResource("12_ycdy4")]
-playersnodepath = NodePath("../../../PlayerAvatars")
-localplayerscene = ""
-
-[node name="roomname" parent="NetworkGatewayViewport/Viewport/NetworkGateway/VBox/TabContainer/MQTTsignalling/VBox/HBoxM/HSplitContainer/Msettings/HBox" parent_id_path=PackedInt32Array(407170005, 804249689) index="1" unique_id=113252904]
-text = "lime"
 
 [node name="Screen" parent="NetworkGatewayViewport" index="1"]
 mesh = SubResource("QuadMesh_qxf84")
@@ -156,14 +168,7 @@ viewport_size = Vector2(650, 400)
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
 shape = SubResource("BoxShape3D_vor2y")
 
-[node name="PlayerAvatars" type="Node3D" parent="." unique_id=1854644174]
+[connection signal="xr_failed_to_initialize" from="XRSystem/XROrigin3D/StartXR" to="XRSystem" method="_on_start_xr_xr_failed_to_initialize"]
 
-[node name="VRPlayerAvatar" parent="PlayerAvatars" unique_id=391835606 instance=ExtResource("13_ycdy4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
-
-[node name="PlayerFrame" parent="PlayerAvatars/VRPlayerAvatar" unique_id=967951852 instance=ExtResource("14_w48qg")]
-
-[connection signal="xr_failed_to_initialize" from="XRSystem/XROrigin3D/StartXR" to="." method="_on_start_xr_xr_failed_to_initialize"]
-
+[editable path="MultiplayerSystem/Viewport/NetworkGateway"]
 [editable path="NetworkGatewayViewport"]
-[editable path="NetworkGatewayViewport/Viewport/NetworkGateway"]
