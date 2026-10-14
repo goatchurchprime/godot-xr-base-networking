@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="12_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="13_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://djehrm378cbde" path="res://addons/player-networking/PlayerFrameLocal.tscn" id="14_w48qg"]
+[ext_resource type="Script" path="res://Runtime/HandDebugMenu.gd" id="15_hand_menu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
 albedo_texture = ExtResource("11_074og")
@@ -117,8 +118,11 @@ shadow_enabled = true
 environment = SubResource("Environment_1bvp3")
 
 [node name="NetworkGatewayViewport" parent="." unique_id=1130742234 instance=ExtResource("11_dg77c")]
-transform = Transform3D(0.8685104, 0, -0.4956709, 0, 1, 0, 0.4956709, 0, 0.8685104, -3.4790926, 0.9929738, -3.2379038)
-viewport_size = Vector2(650, 400)
+visible = false
+screen_size = Vector2(0.52, 0.32)
+viewport_size = Vector2(676, 416)
+script = ExtResource("15_hand_menu")
+controller_path = NodePath("../XROrigin3D/XRController3D_left")
 
 [node name="Viewport" parent="NetworkGatewayViewport" index="0" unique_id=1967651754]
 size = Vector2i(650, 400)
