@@ -1,13 +1,24 @@
-[gd_scene format=3 uid="uid://dc27em2jrqx5t"]
+[gd_scene load_steps=10 format=3 uid="uid://dc27em2jrqx5t"]
 
 [ext_resource type="PackedScene" uid="uid://ksq0mmbfkp5m" path="res://Runtime/NetworkedRuntime.tscn" id="1_network_shell"]
 [ext_resource type="PackedScene" path="res://World/WorldFrame.tscn" id="2_world"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="3_viewport_2d_in_3d"]
+[ext_resource type="Script" path="res://Runtime/HandDebugMenu.gd" id="4_hand_menu"]
+[ext_resource type="Script" path="res://Runtime/HandPanelCycle.gd" id="5_panel_cycle"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_r824o"]
 resource_local_to_scene = true
 size = Vector2(3, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qtou5"]
+resource_local_to_scene = true
+size = Vector3(3, 2, 0.02)
+
+[sub_resource type="QuadMesh" id="QuadMesh_world"]
+resource_local_to_scene = true
+size = Vector2(3, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_world"]
 resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
 
@@ -20,11 +31,36 @@ speed_traction = 33.0
 [node name="WorldFrame" parent="World" parent_id_path=PackedInt32Array(1711002190) index="3" unique_id=1395133857 instance=ExtResource("2_world")]
 host_manages_locomotion = true
 
+[node name="NetworkGatewayViewport" parent="." parent_id_path=PackedInt32Array()]
+handles_toggle = false
+
 [node name="Screen" parent="NetworkGatewayViewport" parent_id_path=PackedInt32Array(1130742234) index="1"]
 mesh = SubResource("QuadMesh_r824o")
 
 [node name="CollisionShape3D" parent="NetworkGatewayViewport/StaticBody3D" index="0"]
 shape = SubResource("BoxShape3D_qtou5")
 
+[node name="WorldControlsViewport" parent="." instance=ExtResource("3_viewport_2d_in_3d")]
+visible = false
+script = ExtResource("4_hand_menu")
+controller_path = NodePath("../XRSystem/XROrigin3D/XRController3D_left")
+handles_toggle = false
+starts_open = false
+hand_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, -0.3)
+screen_size = Vector2(0.48, 0.286)
+viewport_path = NodePath("../World/WorldFrame/ControlsViewport")
+viewport_size = Vector2(420, 250)
+
+[node name="Screen" parent="WorldControlsViewport" index="1"]
+mesh = SubResource("QuadMesh_world")
+
+[node name="CollisionShape3D" parent="WorldControlsViewport/StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_world")
+
+[node name="HandPanelCycle" type="Node" parent="."]
+script = ExtResource("5_panel_cycle")
+controller_path = NodePath("../XRSystem/XROrigin3D/XRController3D_left")
+panel_paths = Array[NodePath]([NodePath("../NetworkGatewayViewport"), NodePath("../WorldControlsViewport")])
+
 [editable path="NetworkGatewayViewport"]
-[editable path="NetworkGatewayViewport/Viewport/NetworkGateway"]
+[editable path="WorldControlsViewport"]

@@ -11,6 +11,7 @@ signal menu_closed
 
 @export var controller_path: NodePath
 @export var toggle_button: StringName = &"menu_button"
+@export var handles_toggle := true
 @export var starts_open := false
 @export var hand_offset := Transform3D(
 	Basis.IDENTITY,
@@ -25,7 +26,8 @@ func _ready() -> void:
 	if not _controller:
 		push_warning("HandDebugMenu cannot find its controller at %s" % controller_path)
 	else:
-		_controller.button_pressed.connect(_on_controller_button_pressed)
+		if handles_toggle:
+			_controller.button_pressed.connect(_on_controller_button_pressed)
 		_follow_controller()
 
 	visible = starts_open

@@ -1033,7 +1033,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not event.pressed:
 		return
 	if event.keycode == KEY_ESCAPE:
-		get_tree().quit()
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		get_viewport().set_input_as_handled()
 	elif event.keycode in [KEY_PLUS, KEY_KP_ADD]:
 		fly_speed *= 1.5
 	elif event.keycode in [KEY_MINUS, KEY_KP_SUBTRACT]:

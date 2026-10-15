@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://World/WorldControls.gd" id="1_controls"]
+
+[node name="WorldControls" type="PanelContainer"]
+offset_right = 420.0
+offset_bottom = 250.0
+script = ExtResource("1_controls")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "World"
+
+[node name="SunRow" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="SunLabel" type="Label" parent="Margin/VBox/SunRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sun brightness"
+
+[node name="SunValue" type="Label" parent="Margin/VBox/SunRow"]
+layout_mode = 2
+text = "1.0"
+
+[node name="SunEnergy" type="HSlider" parent="Margin/VBox"]
+layout_mode = 2
+min_value = 0.0
+max_value = 8.0
+step = 0.1
+value = 1.0
+
+[node name="TerrainVisible" type="CheckButton" parent="Margin/VBox"]
+layout_mode = 2
+text = "Terrain visible"
+
+[node name="CaveVisible" type="CheckButton" parent="Margin/VBox"]
+layout_mode = 2
+text = "Cave survey visible"
