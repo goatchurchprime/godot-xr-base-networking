@@ -5,25 +5,23 @@ official VRChat creator documentation on 2026-10-13.
 
 ## Decision in brief
 
-TunnelXR should treat the world, XR embodiment, and networking as three
-separate capabilities. That leads naturally to three small application scenes:
+TunnelXR treats the world, XR embodiment, and networking as three separate
+capabilities composed by two small application scenes:
 
 | Scene | Composition | Intended use |
 | --- | --- | --- |
-| `MainSolo` | World + minimal desktop spectator/controller | Import-safe world development without the XR or networking addon stacks |
-| `MainSoloXR` | World + local XR player | Normal solo use, either with OpenXR hardware or XRSimulator on a flat screen |
-| `MainNetworkingXR` | World + local XR player + network session | The same embodiment with replicated players and voice |
+| `MainSolo` | World + local XR player | Normal solo use, either with OpenXR hardware or XRSimulator on a flat screen |
+| `MainNetworking` | World + local XR player + network session | The same embodiment with replicated players and voice |
 
-`MainSoloXR` is the important middle layer. It proves that falling, flying,
-colliding, grabbing, and operating the world belong to the local player/XR
-runtime rather than to networking. `MainSolo` remains useful as a lightweight
-world viewer and authoring target even if it is not eventually a complete user
-experience.
+`MainSolo` proves that falling, flying, colliding, grabbing, and operating the
+world belong to XRSystem rather than to networking. `WorldFrame` and the
+terrain lighting lab remain available as lightweight authoring targets without
+creating another application runtime.
 
-These are compositions, not three implementations. All three mount the same
-`WorldFrame`; both XR scenes instantiate the same local-player scene; the
-networked scene only adds session machinery. A world must not contain OpenXR,
-XR Tools, MQTT, TwoVoIP, or multiplayer nodes.
+These are compositions, not separate implementations. Both mount the same
+`WorldFrame` and `XRSystem`; the networked scene only adds
+`XRMultiplayerSystem`. A world must not contain OpenXR, XR Tools, MQTT,
+TwoVoIP, or multiplayer nodes.
 
 World interaction also need not depend directly on XR controllers. The XR
 runtime and the minimal desktop runtime can both expose semantic actions such
@@ -276,9 +274,8 @@ then combine replicated physical observations with replicated virtual
 placement in exactly the same way, without confusing locomotion with a real
 body movement.
 
-The same rule applies without networking: `MainSoloXR` runs both paths locally
-and simply has no publisher. `MainSolo` supplies a lightweight desktop
-`PlayerInterface` or spectator controller and need not instantiate XR-human.
+The same rule applies without networking: `MainSolo` runs both paths locally
+and simply has no publisher.
 
 ## Minimal Godot-facing interface
 
@@ -313,8 +310,7 @@ An arrival sequence should be explicit:
 
 ## Recommended first slice
 
-1. Add the otherwise-trivial `MainSoloXR` composition without changing the
-   existing local XR rig.
+1. Keep `MainSolo` as the direct `XRSystem` plus `WorldFrame` composition.
 2. Add a small `WorldPlayerProfile` with only locomotion mode, gravity scale,
    speed, spawn, and fall-respawn fields.
 3. Have the XR player runtime consume that resource before its first physics
@@ -322,9 +318,8 @@ An arrival sequence should be explicit:
 4. Give the cave world the flying profile above.
 5. Add one debug `WorldAffordanceVolume` that changes gravity/mode and prove
    overlapping-volume restoration.
-6. Mount exactly the same world and XR player beneath the networked shell; only
+6. Add `XRMultiplayerSystem` beside exactly the same world and XR system; only
    then test that local results replicate correctly.
 
 This establishes the seam needed now without inventing the eventual PlayerBody,
 XR-human, avatar, or game-rule systems in advance.
-

@@ -2,8 +2,15 @@
 
 TunnelXR is one Godot project with one world and two small application scenes:
 
-- `MainSolo.tscn` mounts `World/WorldFrame.tscn` in the solo runtime.
-- `MainNetworking.tscn` mounts the same WorldFrame in the multiplayer runtime.
+- `MainSolo.tscn` directly instances `XRSystem` and `WorldFrame`.
+- `MainNetworking.tscn` directly instances `XRSystem`,
+  `XRMultiplayerSystem`, and the same `WorldFrame`.
+
+The component scenes live at `addons/xr-system/xr_system.tscn`,
+`addons/xr-system/xr_multiplayer_system.tscn`, and
+`World/WorldFrame.tscn`. There is deliberately no shared inherited runtime
+scene: each application entry point shows its complete composition in the
+editor.
 
 The world, its shaders, and its runtime data live together under `World/`.
 Cesium, Potree, and Survex are the restricted world dependency set currently

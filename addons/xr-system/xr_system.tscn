@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://spcaqvje838e"]
+
+[ext_resource type="Script" uid="uid://b86wxmfntv6oo" path="res://addons/xr-system/xr_system.gd" id="1_uaemv"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="2_nfj3q"]
+[ext_resource type="PackedScene" uid="uid://kyhaogt0a4q8" path="res://addons/godot-xr-tools/functions/movement_flight.tscn" id="3_edwbp"]
+[ext_resource type="PackedScene" uid="uid://btknduttnmoxf" path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" id="4_2ardm"]
+[ext_resource type="PackedScene" uid="uid://wtpox7m5vu2b" path="res://addons/godot-xr-tools/effects/fade.tscn" id="5_fculv"]
+[ext_resource type="PackedScene" uid="uid://hpr0v012ghsb" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_tac_glove.tscn" id="6_nxd72"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="7_vokqx"]
+[ext_resource type="PackedScene" uid="uid://dup2vp8v5rpi5" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_tac_glove.tscn" id="8_meu5u"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="9_lammh"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="10_ihrsn"]
+[ext_resource type="PackedScene" uid="uid://c2q5phg8w08o" path="res://addons/godot-xr-tools/functions/movement_jump.tscn" id="11_l5flf"]
+[ext_resource type="PackedScene" uid="uid://ctltchlf2j2r4" path="res://addons/xr-simulator/XRSimulator.tscn" id="12_uwe5f"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="13_pjlgi"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="14_g8siw"]
+[ext_resource type="Script" uid="uid://njfuolbcljbr" path="res://addons/xr-system/viewport_ui_panels.gd" id="15_evpfr"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_uaemv"]
+resource_local_to_scene = true
+size = Vector2(3, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nfj3q"]
+resource_local_to_scene = true
+size = Vector3(3, 2, 0.02)
+
+[node name="XRSystem" type="Node3D" unique_id=554222052]
+script = ExtResource("1_uaemv")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1098194859]
+
+[node name="StartXR" parent="XROrigin3D" unique_id=250557281 instance=ExtResource("2_nfj3q")]
+
+[node name="MovementFlight" parent="XROrigin3D" unique_id=1889012555 instance=ExtResource("3_edwbp")]
+pitch = 0
+bearing = 0
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1620617625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1355605, 0)
+
+[node name="VRCommonShaderCache" parent="XROrigin3D/XRCamera3D" unique_id=895273528 instance=ExtResource("4_2ardm")]
+
+[node name="Fade" parent="XROrigin3D/XRCamera3D" unique_id=921873433 instance=ExtResource("5_fculv")]
+
+[node name="XRController3D_left" type="XRController3D" parent="XROrigin3D" unique_id=361588131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1938979, 1.0335946, -0.44095612)
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="XROrigin3D/XRController3D_left" unique_id=1409043014 instance=ExtResource("6_nxd72")]
+
+[node name="MovementDirect" parent="XROrigin3D/XRController3D_left" unique_id=1544958757 instance=ExtResource("7_vokqx")]
+strafe = true
+
+[node name="XRController3D_right" type="XRController3D" parent="XROrigin3D" unique_id=623807147]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20470023, 1.0419132, -0.43321365)
+tracker = &"right_hand"
+
+[node name="RightHand" parent="XROrigin3D/XRController3D_right" unique_id=940980738 instance=ExtResource("8_meu5u")]
+
+[node name="MovementTurn" parent="XROrigin3D/XRController3D_right" unique_id=1607688452 instance=ExtResource("9_lammh")]
+
+[node name="FunctionPointer" parent="XROrigin3D/XRController3D_right" unique_id=1049504111 instance=ExtResource("10_ihrsn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
+show_target = true
+target_radius = 0.005
+
+[node name="MovementJump" parent="XROrigin3D/XRController3D_right" unique_id=949936823 instance=ExtResource("11_l5flf")]
+
+[node name="XRSimulator" parent="XROrigin3D" unique_id=486516196 instance=ExtResource("12_uwe5f")]
+enabled = false
+
+[node name="PlayerBody" parent="XROrigin3D" unique_id=1839333816 instance=ExtResource("13_pjlgi")]
+
+[node name="ViewportUIPanels" parent="." unique_id=1047696829 instance=ExtResource("14_g8siw")]
+visible = false
+script = ExtResource("15_evpfr")
+toggle_button = &"menu_button"
+starts_at = -1
+panel_width_metres = 0.52
+hand_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, -0.3)
+
+[node name="Screen" parent="ViewportUIPanels" index="1"]
+mesh = SubResource("QuadMesh_uaemv")
+
+[node name="CollisionShape3D" parent="ViewportUIPanels/StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_nfj3q")
+
+[connection signal="xr_failed_to_initialize" from="XROrigin3D/StartXR" to="." method="_on_start_xr_xr_failed_to_initialize"]
+
+[editable path="ViewportUIPanels"]

@@ -1,15 +1,16 @@
 # TunnelXR
 
-TunnelXR is a single Godot project that combines one geospatial WorldFrame with
-either a solo XR/desktop runtime or the reusable multiplayer runtime.
+TunnelXR is a Godot project composed directly from independent XR, multiplayer,
+and geospatial world scenes.
 
 ```text
-MainSolo.tscn       -> solo runtime       + World/WorldFrame.tscn
-MainNetworking.tscn -> networking runtime + World/WorldFrame.tscn
+MainSolo.tscn       -> XRSystem + WorldFrame
+MainNetworking.tscn -> XRSystem + XRMultiplayerSystem + WorldFrame
 ```
 
-The default scene is `MainSolo.tscn`. Install the restricted base addon set
-before importing the project:
+There is no inherited runtime shell between these application scenes and their
+components. The default scene is `MainSolo.tscn`. Install the restricted base
+addon set before importing the project:
 
 ```sh
 godot4 --headless --xr-mode off --path . --script plug.gd link base
@@ -32,5 +33,5 @@ godot4 --editor --path . MainNetworking.tscn
 
 See `COMPOSITION.md` for peer revision checks and unlinking. The proposed
 world-to-player physics boundary, including zero-gravity regions and the
-three-scene composition, is documented in
+three-component composition, is documented in
 `docs/WORLD_PLAYER_AFFORDANCES.md`.

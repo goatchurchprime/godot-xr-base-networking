@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://i30xctafqgt0"]
 
-[ext_resource type="PackedScene" path="res://Runtime/SoloRuntime.tscn" id="1_runtime"]
+[ext_resource type="PackedScene" uid="uid://spcaqvje838e" path="res://addons/xr-system/xr_system.tscn" id="1_8fdvs"]
 [ext_resource type="PackedScene" path="res://World/WorldFrame.tscn" id="2_world"]
 
-[node name="Main" instance=ExtResource("1_runtime")]
+[node name="Main" type="Node3D" unique_id=1973674573]
 
-[node name="WorldFrame" parent="World" instance=ExtResource("2_world")]
-player_root_path = NodePath("../../LocalPlayer")
+[node name="XRSystem" parent="." unique_id=554222052 instance=ExtResource("1_8fdvs")]
+
+[node name="WorldFrame" parent="." unique_id=415383065 instance=ExtResource("2_world")]
+host_manages_locomotion = true

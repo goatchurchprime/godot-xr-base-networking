@@ -8,27 +8,20 @@ the main scene tree.
 ## Scene layout
 
 ```text
-GodotCesiumXR or TunnelXRQuestCave       application shell
-├── CaveCesiumWorld or CaveLocalWorld   shared WorldFrame3D
-│   ├── Environment
-│   │   └── CaveEnvironment             sky, ambient light, directional sun
-│   ├── Geospatial                      Cesium and other Earth data
-│   ├── Survey
-│   │   └── CaveSurveyComponent
-│   │       └── SurvexLayer             survey geometry and station API
-│   ├── PointClouds                     Potree components
-│   ├── SharedPlaces                    networked world entities
-│   ├── Avatars                         world-space avatar presentations
-│   ├── PhysicsDomain                   unit-scale physics entities
-│   └── Debug
-├── LocalPlayer
-│   └── XRPlayerRig                     camera, tracked hands, selection laser
-└── ApplicationSystems                  orchestration which is not world content
+MainSolo
+├── XRSystem                            local rig, locomotion, hands and XR UI
+└── WorldFrame                          shared geospatial presentation
+
+MainNetworking
+├── XRSystem                            the same local XR component
+├── XRMultiplayerSystem                 gateway, voice and replicated avatars
+└── WorldFrame                          the same world component
 ```
 
-`CaveCesiumWorld` is the desktop/Steam Frame world. `CaveLocalWorld` is the
-offline Android/Quest world and intentionally contains no Cesium native types.
-Both use the same survey component and the same stable child categories.
+`WorldFrame` owns the stable Environment, Geospatial, Terrain, Survey,
+PointClouds, SharedPlaces, Avatars, PhysicsDomain and Debug categories. Cesium
+is optional and disabled by default; local terrain and survey data therefore
+use this same scene on desktop, Steam Frame and Quest.
 
 ## WorldFrame contract
 
@@ -79,7 +72,8 @@ Current component APIs include:
 
 - `CaveSurveyComponent.load_local_file()` for an offline/local frame;
 - `CaveSurveyComponent.load_georeferenced_file()` for a Cesium-aligned frame;
-- `XRPlayerRig.set_pointer_segment()` and `hide_pointer()`;
+- `XRSystem` exposes its origin, camera and controllers to the world;
+- `ViewportUIPanels` presents component-owned UI viewports in XR;
 - `WorldFrame3D.apply_rebase()`, coordinate conversion, and view-context
   notification.
 

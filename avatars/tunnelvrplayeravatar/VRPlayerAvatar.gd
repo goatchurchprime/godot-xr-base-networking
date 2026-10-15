@@ -91,7 +91,7 @@ func PF_processlocalavatarposition(delta):
 		handl.transform.origin += Vector3(headface.x*0.2, 0.2, headface.z*0.2)
 		handr.transform.origin += Vector3(headface.x*0.2, 0.2, headface.z*0.2)
 
-	var twovoipmic = get_node("/root/Main/MultiplayerSystem/Viewport/NetworkGateway/VBox/PlayerConnections/VBox/RecordingFeature/TwoVoipMic")
+	var twovoipmic = get_node("/root/Main/XRMultiplayerSystem/Viewport/NetworkGateway/VBox/PlayerConnections/VBox/RecordingFeature/TwoVoipMic")
 	if twovoipmic:
 		$HeadCam/AudioStreamPlayer/MouthSign.scale.z = twovoipmic.last_chunkmax
 

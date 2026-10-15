@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://d354utuwhx0bo"]
+
+[ext_resource type="PackedScene" uid="uid://cfmoahalri06d" path="res://addons/player-networking/NetworkGateway.tscn" id="1_m0t3x"]
+[ext_resource type="PackedScene" uid="uid://bgw2tanm4il3j" path="res://avatars/tunnelvrplayeravatar/VRPlayerAvatar.tscn" id="2_34mke"]
+
+[node name="XRMultiplayerSystem" type="Node3D" unique_id=873523670]
+
+[node name="Viewport" type="SubViewport" parent="." unique_id=1080310069]
+size = Vector2i(650, 400)
+
+[node name="NetworkGateway" parent="Viewport" unique_id=407170005 instance=ExtResource("1_m0t3x")]
+offset_right = 692.0
+offset_bottom = 414.0
+playersnodepath = NodePath("../../PlayerAvatars")
+localplayerscene = ""
+
+[node name="TabContainer" parent="Viewport/NetworkGateway/VBox" parent_id_path=PackedInt32Array(407170005, 1128632699) index="1" unique_id=727115474]
+current_tab = 0
+
+[node name="roomname" parent="Viewport/NetworkGateway/VBox/TabContainer/MQTTsignalling/VBox/HBoxM/HSplitContainer/Msettings/HBox" parent_id_path=PackedInt32Array(407170005, 804249689) index="1" unique_id=113252904]
+text = "lime"
+
+[node name="PlayerAvatars" type="Node3D" parent="." unique_id=2098917579]
+
+[node name="VRPlayerAvatar" parent="PlayerAvatars" unique_id=1613864373 instance=ExtResource("2_34mke")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8132508, 1.1010478, 0)
+
+[editable path="Viewport/NetworkGateway"]
